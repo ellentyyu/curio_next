@@ -28,7 +28,7 @@ import {
   QuestionMarkCircleIcon,
   StarIcon,
 } from '@heroicons/react/20/solid'
-
+import Image from 'next/image'
 const navigation = {
   categories: [
     {
@@ -409,7 +409,9 @@ export default function ProductDetailPage() {
 
             {/* Product image */}
             <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
-              <img
+              <Image
+                width={500}
+                height={500}
                 alt={product.imageAlt}
                 src={product.imageSrc}
                 className="aspect-square w-full rounded-lg object-cover"
@@ -521,7 +523,9 @@ export default function ProductDetailPage() {
 
             <div className="mt-16 grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:gap-x-8">
               <div>
-                <img
+                <Image
+                  width={500}
+                  height={500}
                   alt="Drawstring top with elastic loop closure and textured interior padding."
                   src="https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg"
                   className="aspect-3/2 w-full rounded-lg object-cover"
@@ -534,7 +538,9 @@ export default function ProductDetailPage() {
                 </p>
               </div>
               <div>
-                <img
+                <Image
+                  width={500}
+                  height={500}
                   alt="Front zipper pouch with included key ring."
                   src="https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-02.jpg"
                   className="aspect-3/2 w-full rounded-lg object-cover"
@@ -561,7 +567,9 @@ export default function ProductDetailPage() {
                 >
                   <div className="sm:shrink-0">
                     <div className="flow-root">
-                      <img
+                      <Image
+                        width={50}
+                        height={50}
                         alt=""
                         src={incentive.imageSrc}
                         className="mx-auto size-16"
@@ -582,7 +590,7 @@ export default function ProductDetailPage() {
             {/* <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
             {policies.map((policy) => (
               <div key={policy.name}>
-                <img alt="" src={policy.imageSrc} className="h-24 w-auto" />
+                <Image alt="" src={policy.imageSrc} className="h-24 w-auto" />
                 <h3 className="mt-6 text-base font-medium text-gray-900">
                   {policy.name}
                 </h3>
@@ -703,7 +711,9 @@ export default function ProductDetailPage() {
                   {reviews.featured.map((review) => (
                     <div key={review.id} className="py-12">
                       <div className="flex items-center">
-                        <img
+                        <Image
+                          width={50}
+                          height={50}
                           alt={`${review.author}.`}
                           src={review.avatarSrc}
                           className="size-12 rounded-full"

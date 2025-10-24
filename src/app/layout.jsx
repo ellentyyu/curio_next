@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import '@/styles/tailwind.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-
+import { getCategories } from '@/lib/mock-data/products.js'
 export const metadata = {
   title: {
     template: '%s - TaxPal',
@@ -26,7 +26,8 @@ const lexend = Lexend({
   variable: '--font-lexend',
 })
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const categories = await getCategories()
   return (
     <html
       lang="en"
@@ -35,9 +36,10 @@ export default function RootLayout({ children }) {
         inter.variable,
         lexend.variable,
       )}
+      data-scroll-behavior="smooth"
     >
       <body className="flex h-full flex-col">
-        <Header />
+        <Header categories={categories} />
         {children}
         <Footer />
       </body>

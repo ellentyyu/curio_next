@@ -3,8 +3,15 @@ import clsx from 'clsx'
 import React, { forwardRef } from 'react'
 import { TouchTarget } from './button'
 import { Link } from './link'
-
-export function Avatar({ src = null, square = false, initials, alt = '', className, ...props }) {
+import Image from 'next/image'
+export function Avatar({
+  src = null,
+  square = false,
+  initials,
+  alt = '',
+  className,
+  ...props
+}) {
   return (
     <span
       data-slot="avatar"
@@ -15,7 +22,9 @@ export function Avatar({ src = null, square = false, initials, alt = '', classNa
         'inline-grid shrink-0 align-middle [--avatar-radius:20%] *:col-start-1 *:row-start-1',
         'outline -outline-offset-1 outline-black/10 dark:outline-white/10',
         // Border radius
-        square ? 'rounded-(--avatar-radius) *:rounded-(--avatar-radius)' : 'rounded-full *:rounded-full'
+        square
+          ? 'rounded-(--avatar-radius) *:rounded-(--avatar-radius)'
+          : 'rounded-full *:rounded-full',
       )}
     >
       {initials && (
@@ -25,12 +34,19 @@ export function Avatar({ src = null, square = false, initials, alt = '', classNa
           aria-hidden={alt ? undefined : 'true'}
         >
           {alt && <title>{alt}</title>}
-          <text x="50%" y="50%" alignmentBaseline="middle" dominantBaseline="middle" textAnchor="middle" dy=".125em">
+          <text
+            x="50%"
+            y="50%"
+            alignmentBaseline="middle"
+            dominantBaseline="middle"
+            textAnchor="middle"
+            dy=".125em"
+          >
             {initials}
           </text>
         </svg>
       )}
-      {src && <img className="size-full" src={src} alt={alt} />}
+      {src && <Image className="size-full" src={src} alt={alt} />}
     </span>
   )
 }
@@ -38,12 +54,12 @@ export function Avatar({ src = null, square = false, initials, alt = '', classNa
 export const AvatarButton = forwardRef(function AvatarButton(
   { src, square = false, initials, alt, className, ...props },
 
-  ref
+  ref,
 ) {
   let classes = clsx(
     className,
     square ? 'rounded-[20%]' : 'rounded-full',
-    'relative inline-grid focus:not-data-focus:outline-hidden data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-blue-500'
+    'relative inline-grid focus:not-data-focus:outline-hidden data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-blue-500',
   )
 
   return typeof props.href === 'string' ? (

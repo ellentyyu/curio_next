@@ -1,3 +1,4 @@
+import Image from 'next/image'
 export default function Footer() {
   const footerNavigation = {
     products: [
@@ -47,7 +48,9 @@ export default function Footer() {
             <div className="grid grid-cols-1 md:grid-flow-col md:auto-rows-min md:grid-cols-12 md:gap-x-8 md:gap-y-16">
               {/* Image section */}
               <div className="col-span-1 md:col-span-2 lg:col-start-1 lg:row-start-1">
-                <img
+                <Image
+                  width={32}
+                  height={32}
                   alt=""
                   src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                   className="h-8 w-auto"

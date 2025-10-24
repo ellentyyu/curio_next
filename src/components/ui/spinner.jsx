@@ -59,12 +59,14 @@ export function SpinnerIcon({ className, size = 'md' }) {
   }
 
   return (
-    <div
-      className={clsx(
-        'animate-spin rounded-full border-gray-200 border-t-indigo-600 dark:border-gray-700 dark:border-t-indigo-500',
-        sizeClasses[size],
-        className,
-      )}
-    />
+    <div className="flex h-full min-h-[300px] w-full items-center justify-center">
+      <div
+        className={clsx(
+          'animate-spin rounded-full border-gray-200 border-t-gray-500 dark:border-gray-700 dark:border-t-indigo-500',
+          sizeClasses[size],
+          className,
+        )}
+      />
+    </div>
   )
 }

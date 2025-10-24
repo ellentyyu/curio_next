@@ -1,5 +1,5 @@
 import { CheckIcon, ClockIcon } from '@heroicons/react/20/solid'
-
+import Image from 'next/image'
 const products = [
   {
     id: 1,
@@ -60,7 +60,7 @@ export default function CartPage() {
               {products.map((product) => (
                 <li key={product.id} className="flex py-6">
                   <div className="shrink-0">
-                    <img
+                    <Image
                       alt={product.imageAlt}
                       src={product.imageSrc}
                       className="size-24 rounded-md object-cover sm:size-32"

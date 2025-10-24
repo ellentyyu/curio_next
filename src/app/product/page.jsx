@@ -31,7 +31,10 @@ import {
   FunnelIcon,
   StarIcon,
 } from '@heroicons/react/20/solid'
-
+import { Suspense } from 'react'
+import ProductGrid from '@/components/product/ProductGrid'
+import { SpinnerIcon } from '@/components/ui/spinner'
+import { getCategoryData } from '@/lib/mock-data/products'
 const navigation = {
   categories: [
     {
@@ -265,7 +268,7 @@ const sortOptions = [
   { name: 'Price: Low to High', href: '#', current: false },
   { name: 'Price: High to Low', href: '#', current: false },
 ]
-const products = [
+const productsTest = [
   {
     id: 1,
     name: 'Organize Basic Set (Walnut)',
@@ -398,17 +401,18 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ProductPage() {
+export default async function ProductPage({ searchParams }) {
+  const { category } = await searchParams
+  const categoryData = await getCategoryData(category)
   return (
     <div className="bg-white">
       <main className="pb-24">
         <div className="px-4 py-16 text-center sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-            Workspace
+            {`${categoryData?.name.charAt(0).toUpperCase()}${categoryData?.name.slice(1)}`}
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-base text-gray-500">
-            The secret to a tidy desk? Don't get rid of anything, just put it in
-            really really nice looking containers.
+          <p className="mx-auto mt-4 min-h-[56px] max-w-xl text-base text-gray-500">
+            {categoryData?.description}
           </p>
         </div>
 
@@ -676,28 +680,9 @@ export default function ProductPage() {
         </Disclosure>
 
         {/* Product grid */}
-        <section
-          aria-labelledby="products-heading"
-          className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
-        >
-          <h2 className="sr-only">Products</h2>
-
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-            {products.map((product) => (
-              <a key={product.id} href={product.href} className="group">
-                <img
-                  alt={product.imageAlt}
-                  src={product.imageSrc}
-                  className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8"
-                />
-                <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-                <p className="mt-1 text-lg font-medium text-gray-900">
-                  {product.price}
-                </p>
-              </a>
-            ))}
-          </div>
-        </section>
+        <Suspense key={category} fallback={<SpinnerIcon />}>
+          <ProductGrid category={category} />
+        </Suspense>
 
         {/* Pagination */}
         <nav

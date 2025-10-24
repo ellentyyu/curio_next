@@ -5,7 +5,7 @@ import {
   PopoverPanel,
 } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/20/solid'
-
+import Image from 'next/image'
 const products = [
   {
     id: 1,
@@ -82,7 +82,7 @@ export default function CheckoutPage() {
                   key={product.id}
                   className="flex items-start space-x-4 py-6"
                 >
-                  <img
+                  <Image
                     alt={product.imageAlt}
                     src={product.imageSrc}
                     className="size-20 flex-none rounded-md object-cover"
@@ -450,7 +450,7 @@ export default function CheckoutPage() {
                 Continue
               </button>
               <p className="mt-4 text-center text-sm text-gray-500 sm:mt-0 sm:text-left">
-                You won't be charged until the next step.
+                You won&apos;t be charged until the next step.
               </p>
             </div>
           </div>
