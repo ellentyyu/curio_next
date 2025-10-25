@@ -33,12 +33,11 @@ const filters = {
   ],
 }
 const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
+  { name: 'Newest', value: 'newest' },
+  { name: 'Price: Low to High', value: 'price-asc' },
+  { name: 'Price: High to Low', value: 'price-desc' },
 ]
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -63,20 +62,34 @@ export default function ProductFilter() {
   const filterCount = Object.values(selectedFilters).reduce((acc, filter) => {
     return acc + filter.filter((option) => option.checked).length
   }, 0)
+  const [sort, setSort] = useState(searchParams.get('sort') || 'newest')
+  console.log('sort', sort)
+
+  const handleSortChange = (sort) => {
+    setSort(sort)
+    const params = new URLSearchParams(searchParams)
+    params.set('sort', sort)
+    router.push(`/product?${params.toString()}`)
+  }
   // sync url params to selected filters
   useEffect(() => {
+    console.log('searchParams', searchParams)
+
     const params = Object.fromEntries(searchParams.entries())
     setSelectedFilters((prev) => {
-      for (let filter in prev) {
-        if (params[filter]) {
-          prev[filter] = prev[filter].map((option) => ({
-            ...option,
-            checked: params[filter].includes(option.value),
-          }))
-        }
+      const next = structuredClone(prev)
+
+      for (let filter in next) {
+        const active = params[filter]?.split(',') ?? []
+        next[filter] = next[filter].map((option) => ({
+          ...option,
+          checked: active.includes(option.value),
+        }))
       }
-      return prev
+      return next
     })
+
+    setSort(params.sort || 'newest')
   }, [searchParams])
 
   // sync selected filters to url params
@@ -226,53 +239,6 @@ export default function ProductFilter() {
             </fieldset>
           </div>
           <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
-            {/* <fieldset>
-              <legend className="block font-medium">Size</legend>
-              <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
-                {filters.size.map((option, optionIdx) => (
-                  <div key={option.value} className="flex gap-3">
-                    <div className="flex h-5 shrink-0 items-center">
-                      <div className="group grid size-4 grid-cols-1">
-                        <input
-                          defaultValue={option.value}
-                          defaultChecked={option.checked}
-                          id={`size-${optionIdx}`}
-                          name="size[]"
-                          type="checkbox"
-                          className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                        />
-                        <svg
-                          fill="none"
-                          viewBox="0 0 14 14"
-                          className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
-                        >
-                          <path
-                            d="M3 8L6 11L11 3.5"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="opacity-0 group-has-checked:opacity-100"
-                          />
-                          <path
-                            d="M3 7H11"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="opacity-0 group-has-indeterminate:opacity-100"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                    <label
-                      htmlFor={`size-${optionIdx}`}
-                      className="text-base text-gray-600 sm:text-sm"
-                    >
-                      {option.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </fieldset> */}
             <fieldset>
               <legend className="block font-medium">Tag</legend>
               <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
@@ -345,17 +311,19 @@ export default function ProductFilter() {
               <div className="py-1">
                 {sortOptions.map((option) => (
                   <MenuItem key={option.name}>
-                    <a
-                      href={option.href}
+                    <button
+                      onClick={() => {
+                        handleSortChange(option.value)
+                      }}
                       className={classNames(
-                        option.current
+                        option.value === sort
                           ? 'font-medium text-gray-900'
                           : 'text-gray-500',
-                        'block px-4 py-2 text-sm data-focus:bg-gray-100 data-focus:outline-hidden',
+                        'block w-full px-4 py-2 text-left text-sm data-focus:bg-gray-100 data-focus:outline-hidden',
                       )}
                     >
                       {option.name}
-                    </a>
+                    </button>
                   </MenuItem>
                 ))}
               </div>

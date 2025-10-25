@@ -403,7 +403,7 @@ function classNames(...classes) {
 }
 
 export default async function ProductPage({ searchParams }) {
-  const { category, price, color, tag } = await searchParams
+  const { category, price, color, tag, sort } = await searchParams
   const categoryData = await getCategoryData(category)
   return (
     <div className="bg-white">
@@ -422,7 +422,7 @@ export default async function ProductPage({ searchParams }) {
 
         {/* Product grid */}
         <Suspense
-          key={category + price + color + tag}
+          key={category + price + color + tag + sort}
           fallback={<SpinnerIcon />}
         >
           <ProductGrid
@@ -430,6 +430,7 @@ export default async function ProductPage({ searchParams }) {
             price={price}
             color={color}
             tag={tag}
+            sort={sort}
           />
         </Suspense>
 

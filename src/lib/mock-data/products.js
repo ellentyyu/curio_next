@@ -141,7 +141,7 @@ export const productDetails = [
   },
 ]
 
-export const getProducts = async ({ category, price, color, tag }) => {
+export const getProducts = async ({ category, price, color, tag, sort }) => {
   await new Promise((resolve) => setTimeout(resolve, 500))
   let filteredProducts = JSON.parse(JSON.stringify(products))
   if (category) {
@@ -167,6 +167,25 @@ export const getProducts = async ({ category, price, color, tag }) => {
     filteredProducts = filteredProducts.filter((product) =>
       selectedTags.some((t) => product.tags.includes(t)),
     )
+  }
+
+  // TODO: consider split sorting
+  if (sort) {
+    if (sort === 'newest') {
+      filteredProducts = filteredProducts.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt)
+      })
+    }
+    if (sort === 'price-asc') {
+      filteredProducts = filteredProducts.sort((a, b) => {
+        return a.price - b.price
+      })
+    }
+    if (sort === 'price-desc') {
+      filteredProducts = filteredProducts.sort((a, b) => {
+        return b.price - a.price
+      })
+    }
   }
   return filteredProducts
 }

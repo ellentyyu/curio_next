@@ -22,7 +22,7 @@ import {
 import Link from 'next/link'
 import NavMobile from './NavMobile'
 import Image from 'next/image'
-export const navigation = {
+const navigation = {
   categories: [
     {
       id: 'women',
