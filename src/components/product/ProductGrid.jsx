@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import { getProducts } from '@/lib/mock-data/products'
 import Image from 'next/image'
-export default async function ProductGrid({ category }) {
-  const products = await getProducts({ category })
+export default async function ProductGrid({ category, price, color, tag }) {
+  const products = await getProducts({ category, price, color, tag })
+
   return (
     <section
       aria-labelledby="products-heading"

@@ -35,8 +35,23 @@ export const products = [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-07.jpg',
     category: 'travel',
     subcategory: 'Subcategory 1',
-    tags: ['new', 'sale', 'featured'],
-    color: ['beige', 'black'],
+    tags: ['new', 'objects', 'featured'],
+    color: ['purple', 'white'],
+    rating: 4.5,
+    inStock: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 456,
+    name: 'another travel product',
+    price: 9,
+    image:
+      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-06.jpg',
+    category: 'travel',
+    subcategory: 'Subcategory 1',
+    tags: ['new', 'sale', 'tees'],
+    color: ['blue', 'green'],
     rating: 4.5,
     inStock: true,
     createdAt: new Date(),
@@ -126,12 +141,34 @@ export const productDetails = [
   },
 ]
 
-export const getProducts = async ({ category }) => {
-  await new Promise((resolve) => setTimeout(resolve, 5000))
+export const getProducts = async ({ category, price, color, tag }) => {
+  await new Promise((resolve) => setTimeout(resolve, 500))
+  let filteredProducts = JSON.parse(JSON.stringify(products))
   if (category) {
-    return products.filter((product) => product.category === category)
+    filteredProducts = filteredProducts.filter(
+      (product) => product.category === category,
+    )
   }
-  return products
+  if (price) {
+    // TODO: Handle price range
+    const selectedPrice = price.split(',')
+    filteredProducts = filteredProducts.filter((product) =>
+      selectedPrice.some((p) => product.price >= p),
+    )
+  }
+  if (color) {
+    const selectedColors = color.split(',')
+    filteredProducts = filteredProducts.filter((p) =>
+      selectedColors.some((c) => p.color.includes(c)),
+    )
+  }
+  if (tag) {
+    const selectedTags = tag.split(',')
+    filteredProducts = filteredProducts.filter((product) =>
+      selectedTags.some((t) => product.tags.includes(t)),
+    )
+  }
+  return filteredProducts
 }
 
 export const getCategories = async () => {
