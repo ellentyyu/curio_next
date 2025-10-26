@@ -1,6 +1,3 @@
-'use client'
-
-import { Fragment, useState } from 'react'
 import {
   Dialog,
   DialogBackdrop,
@@ -29,188 +26,9 @@ import {
   StarIcon,
 } from '@heroicons/react/20/solid'
 import Image from 'next/image'
-const navigation = {
-  categories: [
-    {
-      id: 'women',
-      name: 'Women',
-      featured: [
-        {
-          name: 'New Arrivals',
-          href: '#',
-          imageSrc:
-            'https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-01.jpg',
-          imageAlt:
-            'Models sitting back to back, wearing Basic Tee in black and bone.',
-        },
-        {
-          name: 'Basic Tees',
-          href: '#',
-          imageSrc:
-            'https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-02.jpg',
-          imageAlt:
-            'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
-        },
-      ],
-      sections: [
-        {
-          id: 'clothing',
-          name: 'Clothing',
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Denim', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
-          ],
-        },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
-            { name: 'Sunglasses', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Belts', href: '#' },
-          ],
-        },
-        {
-          id: 'brands',
-          name: 'Brands',
-          items: [
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' },
-            { name: 'Re-Arranged', href: '#' },
-            { name: 'Counterfeit', href: '#' },
-            { name: 'Significant Other', href: '#' },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'men',
-      name: 'Men',
-      featured: [
-        {
-          name: 'New Arrivals',
-          href: '#',
-          imageSrc:
-            'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-          imageAlt:
-            'Drawstring top with elastic loop closure and textured interior padding.',
-        },
-        {
-          name: 'Artwork Tees',
-          href: '#',
-          imageSrc:
-            'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-02-image-card-06.jpg',
-          imageAlt:
-            'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
-        },
-      ],
-      sections: [
-        {
-          id: 'clothing',
-          name: 'Clothing',
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
-          ],
-        },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
-            { name: 'Sunglasses', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Belts', href: '#' },
-          ],
-        },
-        {
-          id: 'brands',
-          name: 'Brands',
-          items: [
-            { name: 'Re-Arranged', href: '#' },
-            { name: 'Counterfeit', href: '#' },
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' },
-          ],
-        },
-      ],
-    },
-  ],
-  pages: [
-    { name: 'Company', href: '#' },
-    { name: 'Stores', href: '#' },
-  ],
-}
-const userNavigation = [
-  { name: 'Sign in', href: '#' },
-  { name: 'Create account', href: '#' },
-]
-const product = {
-  name: 'Everyday Ruck Snack',
-  href: '#',
-  price: '$220',
-  description:
-    "Don't compromise on snack-carrying capacity with this lightweight and spacious bag. The drawstring top keeps all your favorite chips, crisps, fries, biscuits, crackers, and cookies secure.",
-  imageSrc:
-    'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-04-featured-product-shot.jpg',
-  imageAlt:
-    'Light green canvas bag with black straps, handle, front zipper pouch, and drawstring top.',
-  breadcrumbs: [
-    { id: 1, name: 'Travel', href: '#' },
-    { id: 2, name: 'Bags', href: '#' },
-  ],
-  sizes: [
-    { name: '18L', description: 'Perfect for a reasonable amount of snacks.' },
-    { name: '20L', description: 'Enough room for a large amount of snacks.' },
-  ],
-}
-const policies = [
-  {
-    name: 'Free delivery all year long',
-    description:
-      'Name another place that offers year long free delivery? We’ll be waiting. Order now and you’ll get delivery absolutely free.',
-    imageSrc:
-      'https://tailwindcss.com/plus-assets/img/ecommerce/icons/icon-delivery-light.svg',
-  },
-  {
-    name: '24/7 Customer Support',
-    description:
-      'Or so we want you to believe. In reality our chat widget is powered by a naive series of if/else statements that churn out canned responses. Guaranteed to irritate.',
-    imageSrc:
-      'https://tailwindcss.com/plus-assets/img/ecommerce/icons/icon-chat-light.svg',
-  },
-  {
-    name: 'Fast Shopping Cart',
-    description:
-      "Look at the cart in that icon, there's never been a faster cart. What does this mean for the actual checkout experience? I don't know.",
-    imageSrc:
-      'https://tailwindcss.com/plus-assets/img/ecommerce/icons/icon-fast-checkout-light.svg',
-  },
-  {
-    name: 'Gift Cards',
-    description:
-      "We sell these hoping that you will buy them for your friends and they will never actually use it. Free money for us, it's great.",
-    imageSrc:
-      'https://tailwindcss.com/plus-assets/img/ecommerce/icons/icon-gift-card-light.svg',
-  },
-]
+import Link from 'next/link'
+import { getProductDetails } from '@/lib/mock-data/products'
+
 const reviews = {
   average: 4,
   totalCount: 1624,
@@ -254,32 +72,7 @@ const reviews = {
     },
   ],
 }
-const footerNavigation = {
-  products: [
-    { name: 'Bags', href: '#' },
-    { name: 'Tees', href: '#' },
-    { name: 'Objects', href: '#' },
-    { name: 'Home Goods', href: '#' },
-    { name: 'Accessories', href: '#' },
-  ],
-  company: [
-    { name: 'Who we are', href: '#' },
-    { name: 'Sustainability', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Careers', href: '#' },
-    { name: 'Terms & Conditions', href: '#' },
-    { name: 'Privacy', href: '#' },
-  ],
-  customerService: [
-    { name: 'Contact', href: '#' },
-    { name: 'Shipping', href: '#' },
-    { name: 'Returns', href: '#' },
-    { name: 'Warranty', href: '#' },
-    { name: 'Secure Payments', href: '#' },
-    { name: 'FAQ', href: '#' },
-    { name: 'Find a store', href: '#' },
-  ],
-}
+
 const incentives = [
   {
     name: 'Free shipping',
@@ -307,8 +100,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ProductDetailPage() {
-  const [open, setOpen] = useState(false)
+export default async function ProductDetailPage({ params }) {
+  const { id } = await params
+  const product = await getProductDetails(id)
   return (
     <div className="bg-gray-50">
       <main>
@@ -317,32 +111,11 @@ export default function ProductDetailPage() {
           <div className="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 sm:pt-24 sm:pb-32 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
             {/* Product details */}
             <div className="lg:max-w-lg lg:self-end">
-              <nav aria-label="Breadcrumb">
-                <ol role="list" className="flex items-center space-x-2">
-                  {product.breadcrumbs.map((breadcrumb, breadcrumbIdx) => (
-                    <li key={breadcrumb.id}>
-                      <div className="flex items-center text-sm">
-                        <a
-                          href={breadcrumb.href}
-                          className="font-medium text-gray-500 hover:text-gray-900"
-                        >
-                          {breadcrumb.name}
-                        </a>
-                        {breadcrumbIdx !== product.breadcrumbs.length - 1 ? (
-                          <svg
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            aria-hidden="true"
-                            className="ml-2 size-5 shrink-0 text-gray-300"
-                          >
-                            <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-                          </svg>
-                        ) : null}
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </nav>
+              <Link href={`/products?category=${product.category}`}>
+                <span className="text-sm text-gray-500">
+                  {product.category}
+                </span>
+              </Link>
 
               <div className="mt-4">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -410,10 +183,10 @@ export default function ProductDetailPage() {
             {/* Product image */}
             <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
               <Image
-                width={500}
-                height={500}
-                alt={product.imageAlt}
-                src={product.imageSrc}
+                width={600}
+                height={600}
+                alt={product.name}
+                src={product.image}
                 className="aspect-square w-full rounded-lg object-cover"
               />
             </div>
@@ -426,8 +199,9 @@ export default function ProductDetailPage() {
                 </h2>
 
                 <form>
-                  <div className="sm:flex sm:justify-between">
-                    {/* Size selector */}
+                  {/* size */}
+                  {/* <div className="sm:flex sm:justify-between">
+                
                     <fieldset>
                       <legend className="block text-sm font-medium text-gray-700">
                         Size
@@ -463,20 +237,8 @@ export default function ProductDetailPage() {
                         ))}
                       </div>
                     </fieldset>
-                  </div>
-                  <div className="mt-4">
-                    <a
-                      href="#"
-                      className="group inline-flex text-sm text-gray-500 hover:text-gray-700"
-                    >
-                      <span>What size should I buy?</span>
-                      <QuestionMarkCircleIcon
-                        aria-hidden="true"
-                        className="ml-2 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
-                      />
-                    </a>
-                  </div>
-                  <div className="mt-10">
+                  </div> */}
+                  <div className="">
                     <button
                       type="submit"
                       className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
@@ -484,7 +246,7 @@ export default function ProductDetailPage() {
                       Add to bag
                     </button>
                   </div>
-                  <div className="mt-6 text-center">
+                  {/* <div className="mt-6 text-center">
                     <a
                       href="#"
                       className="group inline-flex text-base font-medium"
@@ -497,7 +259,7 @@ export default function ProductDetailPage() {
                         Lifetime Guarantee
                       </span>
                     </a>
-                  </div>
+                  </div> */}
                 </form>
               </section>
             </div>

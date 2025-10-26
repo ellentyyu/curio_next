@@ -9,7 +9,6 @@ export const products = [
     subcategory: 'Subcategory 1',
     tags: ['new', 'sale', 'featured'],
     color: ['beige', 'black'],
-    rating: 4.5,
     createdAt: new Date(),
     updatedAt: new Date(),
   },
@@ -23,7 +22,6 @@ export const products = [
     subcategory: 'Subcategory 2',
     tags: ['new', 'sale', 'featured'],
     color: ['beige', 'pink'],
-    rating: 4.5,
     createdAt: new Date(),
     updatedAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
   },
@@ -37,7 +35,6 @@ export const products = [
     subcategory: 'Subcategory 1',
     tags: ['new', 'objects', 'featured'],
     color: ['purple', 'white'],
-    rating: 4.5,
     inStock: true,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -120,10 +117,13 @@ const defaultCategory = {
 export const productDetails = [
   {
     id: 1,
-    name: 'Product 1',
-    description: 'Description 1',
-    price: 100,
-    image: 'https://via.placeholder.com/150',
+    name: 'another travel product',
+    description:
+      'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
+    price: 9,
+    image:
+      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-06.jpg',
+    category: 'travel',
     gallery: [
       'https://via.placeholder.com/150',
       'https://via.placeholder.com/150',
@@ -195,7 +195,8 @@ export const getCategories = async () => {
 }
 
 export const getProductDetails = async (id) => {
-  return productDetails.find((product) => product.id === id)
+  // return productDetails.find((product) => product.id === id)
+  return productDetails[0]
 }
 export const getCategoryData = async (givenCategory) => {
   if (!givenCategory) {
