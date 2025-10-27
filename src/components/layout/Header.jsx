@@ -22,6 +22,7 @@ import {
 import Link from 'next/link'
 import NavMobile from './NavMobile'
 import Image from 'next/image'
+import CartDropdown from '../cart/CartDropdown'
 const navigation = {
   categories: [
     {
@@ -217,6 +218,38 @@ const navigation = {
     { name: 'Stores', href: '#' },
   ],
 }
+const products = [
+  {
+    id: 1,
+    name: 'Throwback Hip Bag',
+    href: '#',
+    color: 'Salmon',
+    imageSrc:
+      'https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
+    imageAlt:
+      'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
+  },
+  {
+    id: 2,
+    name: 'Medium Stuff Satchel',
+    href: '#',
+    color: 'Blue',
+    imageSrc:
+      'https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+    imageAlt:
+      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+  },
+  {
+    id: 3,
+    name: 'Zip Tote Basket',
+    href: '#',
+    color: 'White and black',
+    imageSrc:
+      'https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-03.jpg',
+    imageAlt:
+      'Front of zip tote bag with white canvas, black canvas straps and handle, and black zipper pulls.',
+  },
+]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -266,7 +299,7 @@ export default function Header({ categories }) {
                 <Link href="/product" className="flex">
                   <span className="sr-only">Your Company</span>
                   <Image
-                    width={32}
+                    width={38}
                     height={32}
                     alt=""
                     src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
@@ -281,15 +314,14 @@ export default function Header({ categories }) {
                   >
                     <Image
                       width={20}
-                      height={20}
+                      height={15}
                       alt=""
                       src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
-                      className="block h-auto w-5 shrink-0"
+                      className="block w-5 shrink-0"
                     />
                     <span className="ml-3 block text-sm font-medium">CAD</span>
                     <span className="sr-only">, change currency</span>
                   </a>
-
                   {/* Search */}
                   <a
                     href="#"
@@ -301,7 +333,6 @@ export default function Header({ categories }) {
                       className="size-6"
                     />
                   </a>
-
                   {/* Account */}
                   <a
                     href="#"
@@ -310,20 +341,8 @@ export default function Header({ categories }) {
                     <span className="sr-only">Account</span>
                     <UserIcon aria-hidden="true" className="size-6" />
                   </a>
-
                   {/* Cart */}
-                  <div className="ml-4 flow-root lg:ml-6">
-                    <a href="#" className="group -m-2 flex items-center p-2">
-                      <ShoppingBagIcon
-                        aria-hidden="true"
-                        className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
-                      />
-                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                        0
-                      </span>
-                      <span className="sr-only">items in cart, view bag</span>
-                    </a>
-                  </div>
+                  <CartDropdown />
                 </div>
               </div>
             </div>

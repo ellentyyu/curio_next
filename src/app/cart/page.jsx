@@ -61,6 +61,8 @@ export default function CartPage() {
                 <li key={product.id} className="flex py-6">
                   <div className="shrink-0">
                     <Image
+                      width={100}
+                      height={100}
                       alt={product.imageAlt}
                       src={product.imageSrc}
                       className="size-24 rounded-md object-cover sm:size-32"
