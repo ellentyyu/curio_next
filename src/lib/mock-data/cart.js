@@ -1,4 +1,4 @@
-export const cart = [
+const cart = [
   {
     id: 1,
     name: 'Product 1',
@@ -6,3 +6,7 @@ export const cart = [
     quantity: 1,
   },
 ]
+
+export const getServerCartItems = async () => {
+  return cart
+}

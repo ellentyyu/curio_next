@@ -24,11 +24,20 @@ export const useCartStore = create(
             cartItems: [...state.cartItems, { ...product, quantity: 1 }],
           }
         }),
-      removeFromCart: (product) =>
+      removeFromCart: (productId) => {
+        console.log(productId)
         set((state) => ({
-          cartItems: state.cartItems.filter((item) => item.id !== product.id),
-        })),
+          cartItems: state.cartItems.filter((item) => item.id !== productId),
+        }))
+      },
       clearCart: () => set({ cartItems: [] }),
+      setCartItems: (cartItems) => set({ cartItems }),
+      updateCartItemQuantity: (productId, quantity) =>
+        set((state) => ({
+          cartItems: state.cartItems.map((item) =>
+            item.id === productId ? { ...item, quantity } : item,
+          ),
+        })),
     }),
     {
       name: 'curio-cart',
