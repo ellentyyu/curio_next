@@ -8,26 +8,7 @@ import { Strong, Text, TextLink } from '@/components/ui/text'
 //import { Logo } from '@/components/UI/logo'
 import Image from 'next/image'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
-import { login } from '@/lib/mock-data/user'
-export default async function Login({ searchParams }) {
-  const { redirectTo } = await searchParams
-  console.log(redirectTo)
-  const handleLogin = async (formData) => {
-    'use server'
-    const email = formData.get('email')
-    const password = formData.get('password')
-
-    const user = await login(email, password)
-    if (user) {
-      cookies().set('user', JSON.stringify(user), { path: '/', httpOnly: true })
-      redirect(decodeURIComponent(redirectTo || '/'))
-    } else {
-      // TODO:error handling
-      return { error: 'Invalid email or password' }
-    }
-  }
+export default function Register() {
   return (
     <div className="flex flex-col justify-center px-6 py-12 lg:px-8 lg:py-30">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -46,12 +27,12 @@ export default async function Login({ searchParams }) {
           className="mx-auto h-10 w-auto not-dark:hidden"
         />
         <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
-          Sign in to your account
+          Create an account
         </h2>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form action={handleLogin} className="space-y-6">
+        <form action="#" method="POST" className="space-y-6">
           <div>
             <label
               htmlFor="email"
@@ -79,14 +60,6 @@ export default async function Login({ searchParams }) {
               >
                 Password
               </label>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
-                >
-                  Forgot password?
-                </a>
-              </div>
             </div>
             <div className="mt-2">
               <input
@@ -105,20 +78,10 @@ export default async function Login({ searchParams }) {
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
             >
-              Sign in
+              Create account
             </button>
           </div>
         </form>
-
-        <p className="mt-10 text-center text-sm/6 text-gray-500 dark:text-gray-400">
-          Not a member?{' '}
-          <Link
-            href="/register"
-            className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
-          >
-            Sign up
-          </Link>
-        </p>
       </div>
     </div>
   )

@@ -83,6 +83,8 @@ export default function CheckoutPage() {
                   className="flex items-start space-x-4 py-6"
                 >
                   <Image
+                    width={100}
+                    height={100}
                     alt={product.imageAlt}
                     src={product.imageSrc}
                     className="size-20 flex-none rounded-md object-cover"

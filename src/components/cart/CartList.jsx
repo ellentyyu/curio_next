@@ -1,8 +1,9 @@
 'use client'
 import { useCartStore } from '@/store/cartStore'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 import {
@@ -14,13 +15,26 @@ import {
 export default function CartList({ isLoggedIn, serverCartItems }) {
   const { cartItems, updateCartItemQuantity, removeFromCart } = useCartStore()
   const [mergedCartItems, setMergedCartItems] = useState([])
+  const router = useRouter()
+  const totalPrice = useMemo(() => {
+    return mergedCartItems.reduce(
+      (acc, product) => acc + product.price * product.quantity,
+      0,
+    )
+  }, [mergedCartItems])
 
   const handleQuantityChange = (e, productId) => {
     const newQuantity = parseInt(e.target.value)
     updateCartItemQuantity(productId, newQuantity)
   }
-  console.log('cartItems', cartItems)
-
+  const handleCheckout = () => {
+    console.log('checkout')
+    if (isLoggedIn) {
+      router.push('/checkout')
+    } else {
+      router.push(`/login?redirectTo=${encodeURIComponent('/checkout')}`)
+    }
+  }
   useEffect(() => {
     if (isLoggedIn) {
       setMergedCartItems(
@@ -30,7 +44,7 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
       setMergedCartItems(cartItems)
     }
   }, [cartItems, serverCartItems, isLoggedIn])
-  return (
+  return mergedCartItems.length > 0 ? (
     <form className="mt-12">
       <section aria-labelledby="cart-heading">
         <h2 id="cart-heading" className="sr-only">
@@ -159,7 +173,7 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
             <div className="flex items-center justify-between">
               <dt className="text-base font-medium text-gray-900">Subtotal</dt>
               <dd className="ml-4 text-base font-medium text-gray-900">
-                $96.00
+                ${totalPrice}
               </dd>
             </div>
           </dl>
@@ -170,8 +184,9 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
 
         <div className="mt-10">
           <button
-            type="submit"
+            type="button"
             className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
+            onClick={handleCheckout}
           >
             Checkout
           </button>
@@ -191,5 +206,17 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
         </div>
       </section>
     </form>
+  ) : (
+    <div className="mt-12">
+      <p className="mb-5 text-center text-2xl font-bold text-gray-700">
+        Your cart is empty.
+      </p>
+      <p className="text-center text-base text-gray-600">
+        Check your favorite products or{' '}
+        <Link href="/product" className="text-indigo-600 hover:text-indigo-500">
+          continue Shopping.
+        </Link>
+      </p>
+    </div>
   )
 }
