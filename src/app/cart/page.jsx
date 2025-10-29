@@ -2,9 +2,11 @@ import { CheckIcon, ClockIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 import CartList from '@/components/cart/CartList'
 import { getServerCartItems } from '@/lib/mock-data/cart'
+import { cookies } from 'next/headers'
 
 export default async function CartPage() {
-  const isLoggedIn = false
+  const cookiesStore = await cookies()
+  const isLoggedIn = !!cookiesStore.get('token')
   let serverCartItems = []
   if (isLoggedIn) {
     serverCartItems = await getServerCartItems()

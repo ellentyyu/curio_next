@@ -10,23 +10,26 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
-import { login } from '@/lib/mock-data/user'
+import { loginUser } from '@/lib/actions/userActions'
 export default async function Login({ searchParams }) {
   const { redirectTo } = await searchParams
-  console.log(redirectTo)
   const handleLogin = async (formData) => {
     'use server'
     const email = formData.get('email')
     const password = formData.get('password')
 
-    const user = await login(email, password)
-    if (user) {
-      cookies().set('user', JSON.stringify(user), { path: '/', httpOnly: true })
-      redirect(decodeURIComponent(redirectTo || '/'))
-    } else {
-      // TODO:error handling
-      return { error: 'Invalid email or password' }
+    const result = await loginUser({ email, password })
+    if (!result.success) {
+      // TODO: add frontend toast notification
+      console.log('login error', result.message)
+      return { error: result.message }
     }
+    const cookiesStore = await cookies()
+    cookiesStore.set('token', result.data.token, {
+      path: '/',
+      httpOnly: true,
+    })
+    redirect(decodeURIComponent(redirectTo || '/'))
   }
   return (
     <div className="flex flex-col justify-center px-6 py-12 lg:px-8 lg:py-30">
@@ -113,7 +116,11 @@ export default async function Login({ searchParams }) {
         <p className="mt-10 text-center text-sm/6 text-gray-500 dark:text-gray-400">
           Not a member?{' '}
           <Link
-            href="/register"
+            href={
+              redirectTo
+                ? `/register?redirectTo=${encodeURIComponent(redirectTo)}`
+                : '/register'
+            }
             className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
           >
             Sign up

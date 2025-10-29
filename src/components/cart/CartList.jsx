@@ -13,6 +13,8 @@ import {
   XMarkIcon,
 } from '@heroicons/react/20/solid'
 export default function CartList({ isLoggedIn, serverCartItems }) {
+  console.log('isLoggedIn cartlist', isLoggedIn)
+
   const { cartItems, updateCartItemQuantity, removeFromCart } = useCartStore()
   const [mergedCartItems, setMergedCartItems] = useState([])
   const router = useRouter()
@@ -28,7 +30,6 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
     updateCartItemQuantity(productId, newQuantity)
   }
   const handleCheckout = () => {
-    console.log('checkout')
     if (isLoggedIn) {
       router.push('/checkout')
     } else {
@@ -81,7 +82,7 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
                       </h3>
                     </div>
                     <div className="mt-1 flex text-sm">
-                      {product.color.length > 0 && (
+                      {product?.color?.length > 0 && (
                         <p className="text-gray-500">{product.color[0]}</p>
                       )}
                     </div>

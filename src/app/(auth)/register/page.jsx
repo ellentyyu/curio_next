@@ -8,7 +8,29 @@ import { Strong, Text, TextLink } from '@/components/ui/text'
 //import { Logo } from '@/components/UI/logo'
 import Image from 'next/image'
 import Link from 'next/link'
-export default function Register() {
+import { registerUser } from '@/lib/actions/userActions'
+import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
+export default async function Register({ searchParams }) {
+  const { redirectTo } = await searchParams
+  const handleRegister = async (formData) => {
+    'use server'
+    const name = formData.get('name')
+    const email = formData.get('email')
+    const password = formData.get('password')
+    const result = await registerUser({ name, email, password })
+    if (!result.success) {
+      // TODO: add frontend toast notification
+      console.log('register error', result.message)
+      return { error: result.message }
+    }
+    const cookiesStore = await cookies()
+    cookiesStore.set('token', result.data.token, {
+      path: '/',
+      httpOnly: true,
+    })
+    redirect(decodeURIComponent(redirectTo || '/product'))
+  }
   return (
     <div className="flex flex-col justify-center px-6 py-12 lg:px-8 lg:py-30">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -32,7 +54,25 @@ export default function Register() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form action="#" method="POST" className="space-y-6">
+        <form action={handleRegister} className="space-y-6">
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm/6 font-medium text-gray-900 dark:text-gray-100"
+            >
+              Name
+            </label>
+            <div className="mt-2">
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                autoComplete="name"
+                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+              />
+            </div>
+          </div>
           <div>
             <label
               htmlFor="email"
