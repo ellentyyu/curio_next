@@ -63,7 +63,6 @@ export default function ProductFilter() {
     return acc + filter.filter((option) => option.checked).length
   }, 0)
   const [sort, setSort] = useState(searchParams.get('sort') || 'newest')
-  console.log('sort', sort)
 
   const handleSortChange = (sort) => {
     setSort(sort)
@@ -73,8 +72,6 @@ export default function ProductFilter() {
   }
   // sync url params to selected filters
   useEffect(() => {
-    console.log('searchParams', searchParams)
-
     const params = Object.fromEntries(searchParams.entries())
     setSelectedFilters((prev) => {
       const next = structuredClone(prev)

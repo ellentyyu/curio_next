@@ -27,8 +27,9 @@ import {
 } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getProductDetails } from '@/lib/mock-data/products'
+import { getProductById } from '@/lib/actions/productActions'
 import AddProductForm from '@/components/cart/AddProductForm'
+import { notFound } from 'next/navigation'
 const reviews = {
   average: 4,
   totalCount: 1624,
@@ -102,7 +103,11 @@ function classNames(...classes) {
 
 export default async function ProductDetailPage({ params }) {
   const { id } = await params
-  const product = await getProductDetails(id)
+  const product = await getProductById(id)
+  if (!product) {
+    notFound()
+  }
+
   return (
     <div className="bg-gray-50">
       <main>
@@ -130,7 +135,7 @@ export default async function ProductDetailPage({ params }) {
 
                 <div className="flex items-center">
                   <p className="text-lg text-gray-900 sm:text-xl">
-                    {product.price}
+                    $ {product.price}
                   </p>
 
                   <div className="ml-4 border-l border-gray-300 pl-4">

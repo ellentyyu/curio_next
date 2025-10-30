@@ -25,7 +25,6 @@ export const useCartStore = create(
           }
         }),
       removeFromCart: (productId) => {
-        console.log(productId)
         set((state) => ({
           cartItems: state.cartItems.filter((item) => item.id !== productId),
         }))

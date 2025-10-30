@@ -3,10 +3,13 @@ import Image from 'next/image'
 import CartList from '@/components/cart/CartList'
 import { getServerCartItems } from '@/lib/mock-data/cart'
 import { cookies } from 'next/headers'
-
+import { verifyToken } from '@/lib/jwt'
 export default async function CartPage() {
   const cookiesStore = await cookies()
-  const isLoggedIn = !!cookiesStore.get('token')
+  const token = cookiesStore.get('token')?.value
+  const isLoggedIn = token ? verifyToken(token) !== null : false
+  console.log('isLoggedIn cart page', isLoggedIn)
+
   let serverCartItems = []
   if (isLoggedIn) {
     serverCartItems = await getServerCartItems()

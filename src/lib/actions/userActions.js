@@ -1,7 +1,6 @@
 import { connectDB } from '@/lib/db'
 import User from '@/models/User'
 import { generateToken } from '@/lib/jwt'
-
 export const registerUser = async ({ name, email, password }) => {
   await connectDB()
 
