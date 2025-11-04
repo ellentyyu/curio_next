@@ -13,10 +13,8 @@ import {
   XMarkIcon,
 } from '@heroicons/react/20/solid'
 export default function CartList({ isLoggedIn, serverCartItems }) {
-  console.log('isLoggedIn cartlist', isLoggedIn)
-
   const { cartItems, updateCartItemQuantity, removeFromCart } = useCartStore()
-  const [mergedCartItems, setMergedCartItems] = useState([])
+  const [mergedCartItems, setMergedCartItems] = useState(cartItems)
   const router = useRouter()
   const totalPrice = useMemo(() => {
     return mergedCartItems.reduce(
@@ -38,13 +36,9 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
   }
   useEffect(() => {
     if (isLoggedIn) {
-      setMergedCartItems(
-        serverCartItems.length > 0 ? serverCartItems : cartItems,
-      )
-    } else {
-      setMergedCartItems(cartItems)
+      setMergedCartItems(serverCartItems)
     }
-  }, [cartItems, serverCartItems, isLoggedIn])
+  }, [serverCartItems, isLoggedIn])
   return mergedCartItems.length > 0 ? (
     <form className="mt-12">
       <section aria-labelledby="cart-heading">
@@ -56,7 +50,7 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
           role="list"
           className="divide-y divide-gray-200 border-t border-b border-gray-200"
         >
-          {mergedCartItems.map((product, productIdx) => (
+          {mergedCartItems.map((product, idx) => (
             <li key={product.id} className="flex py-6 sm:py-10">
               <div className="shrink-0">
                 <Image
@@ -94,7 +88,7 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
                   <div className="mt-4 sm:mt-0 sm:pr-9">
                     <div className="grid w-full max-w-16 grid-cols-1">
                       <select
-                        name={`quantity-${productIdx}`}
+                        name={`quantity-${product.id}`}
                         aria-label={`Quantity, ${product.name}`}
                         className="col-start-1 row-start-1 appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                         value={product.quantity}

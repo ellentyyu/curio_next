@@ -6,6 +6,10 @@ import {
 } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
+import { cookies } from 'next/headers'
+import { verifyToken } from '@/lib/jwt'
+import { getCartByUserId } from '@/lib/actions/cartActions'
+import { redirect } from 'next/navigation'
 const products = [
   {
     id: 1,
@@ -45,7 +49,17 @@ const products = [
   },
 ]
 
-export default function CheckoutPage() {
+export default async function CheckoutPage() {
+  const cookiesStore = await cookies()
+  const token = cookiesStore.get('token')?.value
+  const decodedToken = token ? verifyToken(token) : null
+  if (!decodedToken) {
+    redirect('/login?redirectTo=/checkout')
+  }
+  let cart = null
+  if (decodedToken) {
+    cart = await getCartByUserId(decodedToken.id)
+  }
   return (
     <div className="bg-white">
       {/* Background color split screen for large screens */}

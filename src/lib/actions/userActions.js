@@ -30,13 +30,18 @@ export const loginUser = async ({ email, password }) => {
   if (!isPasswordCorrect) {
     return { success: false, message: 'Invalid password', status: 401 }
   }
-  const token = generateToken({ _id: user._id })
+  const token = generateToken({ id: user._id.toString() })
   return {
     status: 200,
     success: true,
     data: {
       token,
-      user: { _id: user._id.toString(), name: user.name, email: user.email },
+      user: {
+        _id: user._id.toString(),
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+      },
     },
   }
 }
