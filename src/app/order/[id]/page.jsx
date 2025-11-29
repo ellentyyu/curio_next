@@ -1,3 +1,6 @@
+import { getOrderById } from '@/lib/actions/orderActions'
+import Image from 'next/image'
+import { notFound } from 'next/navigation'
 const products = [
   {
     id: 1,
@@ -15,7 +18,11 @@ const products = [
 
 export default async function OrderPage({ params }) {
   const { id } = await params
-
+  const order = await getOrderById(id)
+  console.log('order', order)
+  if (!order) {
+    notFound()
+  }
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
@@ -25,7 +32,7 @@ export default async function OrderPage({ params }) {
             It's on the way!
           </p>
           <p className="mt-2 text-base text-gray-500">
-            Your order #14034056 has shipped and will be with you soon.
+            Your order #{order.id} is being processed and will be shipped soon.
           </p>
 
           <dl className="mt-12 text-sm font-medium">
@@ -38,34 +45,38 @@ export default async function OrderPage({ params }) {
           <h2 className="sr-only">Your order</h2>
 
           <h3 className="sr-only">Items</h3>
-          {products.map((product) => (
+          {order.items.map((item) => (
             <div
-              key={product.id}
+              key={item.id}
               className="flex space-x-6 border-b border-gray-200 py-10"
             >
-              <img
-                alt={product.imageAlt}
-                src={product.imageSrc}
+              <Image
+                alt={item.product.name}
+                src={item.product.image}
                 className="size-20 flex-none rounded-lg bg-gray-100 object-cover sm:size-40"
+                width={160}
+                height={160}
               />
               <div className="flex flex-auto flex-col">
                 <div>
                   <h4 className="font-medium text-gray-900">
-                    <a href={product.href}>{product.name}</a>
+                    <a href={`/product/${item.product.id}`}>
+                      {item.product.name}
+                    </a>
+                    {/* <p className="text-gray-500 text-sm">
+                      {item.product.description}
+                    </p> */}
                   </h4>
-                  <p className="mt-2 text-sm text-gray-600">
-                    {product.description}
-                  </p>
                 </div>
                 <div className="mt-6 flex flex-1 items-end">
                   <dl className="flex divide-x divide-gray-200 text-sm">
                     <div className="flex pr-4 sm:pr-6">
                       <dt className="font-medium text-gray-900">Quantity</dt>
-                      <dd className="ml-2 text-gray-700">{product.quantity}</dd>
+                      <dd className="ml-2 text-gray-700">{item.quantity}</dd>
                     </div>
                     <div className="flex pl-4 sm:pl-6">
                       <dt className="font-medium text-gray-900">Price</dt>
-                      <dd className="ml-2 text-gray-700">{product.price}</dd>
+                      <dd className="ml-2 text-gray-700">$ {item.price}</dd>
                     </div>
                   </dl>
                 </div>
@@ -82,9 +93,15 @@ export default async function OrderPage({ params }) {
                 <dt className="font-medium text-gray-900">Shipping address</dt>
                 <dd className="mt-2 text-gray-700">
                   <address className="not-italic">
-                    <span className="block">Kristin Watson</span>
-                    <span className="block">7363 Cynthia Pass</span>
-                    <span className="block">Toronto, ON N3Y 4H8</span>
+                    <span className="block">{order.shippingAddress.name}</span>
+                    <span className="block">
+                      {order.shippingAddress.address}
+                    </span>
+                    <span className="block">
+                      {order.shippingAddress.state}{' '}
+                      {order.shippingAddress.country}{' '}
+                      {order.shippingAddress.zip}
+                    </span>
                   </address>
                 </dd>
               </div>
@@ -92,9 +109,15 @@ export default async function OrderPage({ params }) {
                 <dt className="font-medium text-gray-900">Billing address</dt>
                 <dd className="mt-2 text-gray-700">
                   <address className="not-italic">
-                    <span className="block">Kristin Watson</span>
-                    <span className="block">7363 Cynthia Pass</span>
-                    <span className="block">Toronto, ON N3Y 4H8</span>
+                    <span className="block">{order.shippingAddress.name}</span>
+                    <span className="block">
+                      {order.shippingAddress.address}
+                    </span>
+                    <span className="block">
+                      {order.shippingAddress.state}{' '}
+                      {order.shippingAddress.country}{' '}
+                      {order.shippingAddress.zip}
+                    </span>
                   </address>
                 </dd>
               </div>
@@ -127,9 +150,9 @@ export default async function OrderPage({ params }) {
             <dl className="space-y-6 border-t border-gray-200 pt-10 text-sm">
               <div className="flex justify-between">
                 <dt className="font-medium text-gray-900">Subtotal</dt>
-                <dd className="text-gray-700">$36.00</dd>
+                <dd className="text-gray-700">$ {order.totalPrice}</dd>
               </div>
-              <div className="flex justify-between">
+              {/* <div className="flex justify-between">
                 <dt className="flex font-medium text-gray-900">
                   Discount
                   <span className="ml-2 rounded-full bg-gray-200 px-2 py-0.5 text-xs text-gray-600">
@@ -137,14 +160,14 @@ export default async function OrderPage({ params }) {
                   </span>
                 </dt>
                 <dd className="text-gray-700">-$18.00 (50%)</dd>
-              </div>
+              </div> */}
               <div className="flex justify-between">
                 <dt className="font-medium text-gray-900">Shipping</dt>
-                <dd className="text-gray-700">$5.00</dd>
+                <dd className="text-gray-700">$ 50</dd>
               </div>
               <div className="flex justify-between">
                 <dt className="font-medium text-gray-900">Total</dt>
-                <dd className="text-gray-900">$23.00</dd>
+                <dd className="text-gray-900">$ {order.totalPrice + 50}</dd>
               </div>
             </dl>
           </div>
