@@ -1,4 +1,4 @@
-import { Inter, Lexend } from 'next/font/google'
+import { Inter, Lexend, Mrs_Sheppards, Poppins } from 'next/font/google'
 import clsx from 'clsx'
 
 import '@/styles/tailwind.css'
@@ -11,12 +11,12 @@ import { getCategories } from '@/lib/mock-data/products.js'
 import { getProducts, seedProducts } from '@/lib/actions/productActions'
 import { getCartByUserId } from '@/lib/actions/cartActions'
 export const metadata = {
-  title: {
-    template: '%s - TaxPal',
-    default: 'TaxPal - Accounting made simple for small businesses',
+  title: 'Curio Store',
+  template: '%s | Curio Store',
+  icons: {
+    icon: '/curio-favicon.svg',
   },
-  description:
-    'Most bookkeeping software is accurate, but hard to use. We make the opposite trade-off, and hope you don’t get audited.',
+  description: 'Shop for your quirkiness',
 }
 
 const inter = Inter({
@@ -31,6 +31,17 @@ const lexend = Lexend({
   variable: '--font-lexend',
 })
 
+const mrs_sheppards = Mrs_Sheppards({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-mrs-sheppards',
+})
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-poppins',
+})
 export default async function RootLayout({ children }) {
   const cookiesStore = await cookies()
   const token = cookiesStore.get('token')?.value
@@ -43,8 +54,7 @@ export default async function RootLayout({ children }) {
     cart = await getCartByUserId(userId)
   }
 
-  // can move to navbar component
-  const categories = await getCategories()
+  // TODO: seed products if none exist
   const products = await getProducts({})
   if (products.length === 0) {
     await seedProducts()
@@ -53,15 +63,17 @@ export default async function RootLayout({ children }) {
     <html
       lang="en"
       className={clsx(
-        'h-full scroll-smooth bg-white antialiased',
+        'h-full scroll-smooth bg-bg font-poppins text-dark antialiased',
         inter.variable,
         lexend.variable,
+        mrs_sheppards.variable,
+        poppins.variable,
       )}
       data-scroll-behavior="smooth"
     >
       <body className="flex h-full flex-col">
         <HydrationBridge userId={userId} cart={cart} />
-        <Header categories={categories} />
+        <Header />
         {children}
         <Footer />
       </body>

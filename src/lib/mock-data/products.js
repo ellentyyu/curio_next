@@ -108,7 +108,7 @@ export const categories = [
 
 const defaultCategory = {
   id: 0,
-  name: 'Hello, beautiful!',
+  name: 'all',
   description:
     'Looking for something special? Find the hidden gems in our collection.',
   subcategories: [],
@@ -191,7 +191,7 @@ export const getProducts = async ({ category, price, color, tag, sort }) => {
 }
 
 export const getCategories = async () => {
-  return categories
+  return [defaultCategory, ...categories]
 }
 
 export const getProductDetails = async (id) => {
