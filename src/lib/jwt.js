@@ -5,5 +5,10 @@ export const generateToken = (userId) => {
 }
 
 export const verifyToken = (token) => {
-  return jwt.verify(token, process.env.JWT_SECRET)
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET)
+  } catch (error) {
+    console.error('verifyToken error', error)
+    return null
+  }
 }

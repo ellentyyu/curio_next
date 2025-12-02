@@ -10,6 +10,7 @@ import { verifyToken } from '@/lib/jwt'
 import { getCategories } from '@/lib/mock-data/products.js'
 import { getProducts, seedProducts } from '@/lib/actions/productActions'
 import { getCartByUserId } from '@/lib/actions/cartActions'
+import { logout } from '@/lib/user/logout'
 export const metadata = {
   title: 'Curio Store',
   template: '%s | Curio Store',
@@ -45,7 +46,15 @@ const poppins = Poppins({
 export default async function RootLayout({ children }) {
   const cookiesStore = await cookies()
   const token = cookiesStore.get('token')?.value
-  const decodedToken = token ? verifyToken(token) : null
+  // token expiration breaks on dev mode so we need error handling
+  let decodedToken
+  try {
+    decodedToken = token ? verifyToken(token) : null
+  } catch (error) {
+    console.error('verifyToken error', error)
+    decodedToken = null
+  }
+  // const decodedToken = token ? verifyToken(token) : null
   let userId = null
   let cart = null
 

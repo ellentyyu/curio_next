@@ -2,6 +2,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCartStore } from '@/store/cartStore'
+import { logout } from '@/lib/user/logout'
 export default function HydrationBridge({ userId, cart }) {
   const router = useRouter()
   const { cartItems, setCartItems, clearCart } = useCartStore()
@@ -34,25 +35,7 @@ export default function HydrationBridge({ userId, cart }) {
   // logout user
   useEffect(() => {
     if (userId) return
-    const logout = async () => {
-      try {
-        const res = await fetch('/api/auth/logout', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        console.log('logout response', res)
-        if (res.ok) {
-          router.refresh()
-          // TODO: check
-          clearCart()
-        }
-      } catch (error) {
-        console.log('HydrationBridge error', error)
-      }
-    }
-    logout()
+    logout(router, clearCart)
   }, [userId, router])
   return null
 }
