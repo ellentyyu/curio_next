@@ -2,21 +2,27 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCartStore } from '@/store/cartStore'
+import { useUserStore } from '@/store/userStore'
 import { logout } from '@/lib/user/logout'
 export default function HydrationBridge({ userId, cart }) {
   const router = useRouter()
   const { cartItems, setCartItems, clearCart } = useCartStore()
-  // sync cart items from server to client
+  const { setUserId, clearUserId } = useUserStore()
+  // sync server → client (user)
   useEffect(() => {
-    if (!cart) return
-    setCartItems(cart)
-  }, [cart, setCartItems])
+    if (userId) setUserId(userId)
+    else clearUserId()
+  }, [userId])
 
-  // sync cart items from client to server
+  // sync server → client (cart)
   useEffect(() => {
-    // TODO: MAKE SURE WONT SYNC IF LOGGED OUT OR EXPIRED
+    if (cart) setCartItems(cart)
+    else clearCart()
+  }, [cart])
+
+  // sync client → server (cart)
+  useEffect(() => {
     if (!userId) return
-
     const syncCart = async () => {
       try {
         await fetch('/api/cart/sync', {
@@ -32,10 +38,12 @@ export default function HydrationBridge({ userId, cart }) {
     }
     syncCart()
   }, [userId, cartItems])
+
   // logout user
   useEffect(() => {
     if (userId) return
-    logout(router, clearCart)
-  }, [userId, router])
+    logout()
+  }, [userId])
+
   return null
 }

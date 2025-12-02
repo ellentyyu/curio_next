@@ -1,21 +1,10 @@
-export async function logout(router, clearCart, showToast) {
+export async function logout() {
   try {
     const res = await fetch('/api/auth/logout', { method: 'POST' })
     const result = await res.json()
-
-    if (!result.success) {
-      // showToast(result.error.message)
-      console.error('logout error', result.error.message)
-      return
-    }
-
-    clearCart()
-    router.refresh()
-    console.log('logged out')
-
-    // showToast('Logged out')
+    return result
   } catch (err) {
-    console.error('logout error', err)
-    // showToast('Network error')
+    console.error('network error', err)
+    return { success: false, status: 500, error: 'network error' }
   }
 }
