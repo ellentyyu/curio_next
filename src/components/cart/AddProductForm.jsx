@@ -1,6 +1,9 @@
 'use client'
 import { useCartStore } from '@/store/cartStore'
+import { useState } from 'react'
 export default function AddProductForm({ product }) {
+  const [adding, setAdding] = useState(false)
+  const [animationKey, setAnimationKey] = useState(0)
   const { addToCart } = useCartStore()
   const handleAddToCart = () => {
     addToCart({
@@ -11,7 +14,17 @@ export default function AddProductForm({ product }) {
       inStock: product.inStock,
       color: product.color,
     })
+    setAdding(true)
+    setTimeout(() => {
+      setAdding(false)
+      setAnimationKey(animationKey + 1)
+    }, 500)
   }
+  // useEffect(() => {
+  //   if (adding) {
+  //     toast.success('Product added to cart')
+  //   }
+  // }, [adding])
   return (
     <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
       <section aria-labelledby="options-heading">
@@ -60,14 +73,23 @@ export default function AddProductForm({ product }) {
             </div>
           </fieldset>
         </div> */}
-          <div>
+          <div className="min-h-[100px]">
             <button
               type="button"
-              className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
+              className="flex w-full cursor-pointer items-center justify-center rounded-md border border-transparent bg-[#174b2a] px-8 py-3 text-base font-medium text-white hover:bg-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden disabled:cursor-default disabled:bg-[#174b2a]/50"
               onClick={handleAddToCart}
+              disabled={adding}
             >
-              Add to bag
+              {adding ? 'Adding...' : 'Add to bag'}
             </button>
+            {animationKey > 0 && (
+              <p
+                key={animationKey}
+                className="mt-2 animate-[addedHint_0.4s_ease-out] text-center text-sm text-dark"
+              >
+                Added to cart!
+              </p>
+            )}
           </div>
         </form>
       </section>

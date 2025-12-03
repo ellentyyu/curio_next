@@ -45,4 +45,15 @@
   --color-accent: #ff6700; /* orange 400 */
   --color-bluegreen: #3e8989; /* blue green */
   --color-bg: #f2f2f2;
+
+  @keyframes addedHint {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }

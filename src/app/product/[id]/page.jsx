@@ -186,7 +186,7 @@ export default async function ProductDetailPage({ params }) {
             </div>
 
             {/* Product image */}
-            <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
+            <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-start">
               <Image
                 width={600}
                 height={600}
@@ -201,8 +201,8 @@ export default async function ProductDetailPage({ params }) {
           </div>
         </div>
 
-        <div className="mx-auto max-w-2xl px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8">
-          {/* Details section */}
+        {/* <div className="mx-auto max-w-2xl px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8">
+
           <section aria-labelledby="details-heading">
             <div className="flex flex-col items-center text-center">
               <h2
@@ -251,7 +251,6 @@ export default async function ProductDetailPage({ params }) {
             </div>
           </section>
 
-          {/* Policies section */}
           <section aria-labelledby="policy-heading" className="mt-16 lg:mt-24">
             <h2 id="policy-heading" className="sr-only">
               Our policies
@@ -284,21 +283,8 @@ export default async function ProductDetailPage({ params }) {
                 </div>
               ))}
             </div>
-            {/* <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
-            {policies.map((policy) => (
-              <div key={policy.name}>
-                <Image alt="" src={policy.imageSrc} className="h-24 w-auto" />
-                <h3 className="mt-6 text-base font-medium text-gray-900">
-                  {policy.name}
-                </h3>
-                <p className="mt-3 text-base text-gray-500">
-                  {policy.description}
-                </p>
-              </div>
-            ))}
-          </div> */}
           </section>
-        </div>
+        </div> */}
 
         <section aria-labelledby="reviews-heading" className="bg-white">
           <div className="mx-auto max-w-2xl px-4 py-24 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32">

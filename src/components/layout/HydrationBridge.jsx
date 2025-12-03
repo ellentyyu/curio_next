@@ -16,8 +16,8 @@ export default function HydrationBridge({ userId, cart }) {
 
   // sync server → client (cart)
   useEffect(() => {
+    // logged in user has cart
     if (cart) setCartItems(cart)
-    else clearCart()
   }, [cart])
 
   // sync client → server (cart)
