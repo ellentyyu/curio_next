@@ -2,20 +2,27 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCartStore } from '@/store/cartStore'
+import { useUserStore } from '@/store/userStore'
+import { logout } from '@/lib/user/logout'
 export default function HydrationBridge({ userId, cart }) {
   const router = useRouter()
   const { cartItems, setCartItems, clearCart } = useCartStore()
-  // sync cart items from server to client
+  const { setUserId, clearUserId } = useUserStore()
+  // sync server → client (user)
   useEffect(() => {
-    if (!cart) return
-    setCartItems(cart)
-  }, [cart, setCartItems])
+    if (userId) setUserId(userId)
+    else clearUserId()
+  }, [userId])
 
-  // sync cart items from client to server
+  // sync server → client (cart)
   useEffect(() => {
-    // TODO: MAKE SURE WONT SYNC IF LOGGED OUT OR EXPIRED
+    // logged in user has cart
+    if (cart) setCartItems(cart)
+  }, [cart])
+
+  // sync client → server (cart)
+  useEffect(() => {
     if (!userId) return
-
     const syncCart = async () => {
       try {
         await fetch('/api/cart/sync', {
@@ -31,28 +38,12 @@ export default function HydrationBridge({ userId, cart }) {
     }
     syncCart()
   }, [userId, cartItems])
+
   // logout user
   useEffect(() => {
     if (userId) return
-    const logout = async () => {
-      try {
-        const res = await fetch('/api/auth/logout', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        console.log('logout response', res)
-        if (res.ok) {
-          router.refresh()
-          // TODO: check
-          clearCart()
-        }
-      } catch (error) {
-        console.log('HydrationBridge error', error)
-      }
-    }
     logout()
-  }, [userId, router])
+  }, [userId])
+
   return null
 }

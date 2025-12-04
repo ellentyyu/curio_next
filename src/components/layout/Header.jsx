@@ -11,6 +11,10 @@ import {
   TabList,
   TabPanel,
   TabPanels,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
 } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -21,8 +25,12 @@ import {
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import NavMobile from './NavMobile'
+import NavLink from './NavLink'
 import Image from 'next/image'
 import CartDropdown from '../cart/CartDropdown'
+import { getCategories } from '@/lib/mock-data/products.js'
+import UserMenu from './UserMenu'
+
 const navigation = {
   categories: [
     {
@@ -255,16 +263,17 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Header({ categories }) {
+export default async function Header() {
+  const categories = await getCategories()
   return (
     <div className="bg-white">
       {/* Mobile menu */}
       {/*  */}
 
-      <header className="relative bg-white">
+      <header className="relative bg-bg">
         <nav aria-label="Top">
           {/* promo */}
-          <div className="bg-gray-900">
+          <div className="bg-dark">
             <div className="mx-auto flex h-10 max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
               <p className="flex-1 text-center text-sm font-medium text-white lg:flex-none">
                 Get free delivery on orders over $100
@@ -278,37 +287,22 @@ export default function Header({ categories }) {
 
                 {/* menus */}
                 <div className="flex h-full items-center space-x-8 lg:flex-1">
-                  <Link
-                    href="/product"
-                    className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    All
-                  </Link>
                   {categories.map((category) => (
-                    <Link
-                      key={category.name}
-                      href={`/product?category=${category.name}`}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      {`${category.name.charAt(0).toUpperCase()}${category.name.slice(1)}`}
-                    </Link>
+                    <NavLink key={category.name} category={category} />
                   ))}
                 </div>
 
                 {/* Logo */}
                 <Link href="/product" className="flex">
                   <span className="sr-only">Your Company</span>
-                  <Image
-                    width={38}
-                    height={32}
-                    alt=""
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                    className="h-8 w-auto"
-                  />
+                  <h1 className="font-mrs-sheppards text-5xl text-primary">
+                    Curio
+                  </h1>
                 </Link>
 
                 <div className="flex flex-1 items-center justify-end">
-                  <a
+                  {/* FEATURE: Currency selector */}
+                  {/* <a
                     href="#"
                     className="hidden text-gray-700 hover:text-gray-800 lg:flex lg:items-center"
                   >
@@ -321,9 +315,9 @@ export default function Header({ categories }) {
                     />
                     <span className="ml-3 block text-sm font-medium">CAD</span>
                     <span className="sr-only">, change currency</span>
-                  </a>
-                  {/* Search */}
-                  <a
+                  </a> */}
+                  {/* FEATURE: Search */}
+                  {/* <a
                     href="#"
                     className="ml-6 hidden p-2 text-gray-400 hover:text-gray-500 lg:block"
                   >
@@ -332,15 +326,9 @@ export default function Header({ categories }) {
                       aria-hidden="true"
                       className="size-6"
                     />
-                  </a>
-                  {/* Account */}
-                  <a
-                    href="#"
-                    className="p-2 text-gray-400 hover:text-gray-500 lg:ml-4"
-                  >
-                    <span className="sr-only">Account</span>
-                    <UserIcon aria-hidden="true" className="size-6" />
-                  </a>
+                  </a> */}
+                  {/* User */}
+                  <UserMenu />
                   {/* Cart */}
                   <CartDropdown />
                 </div>

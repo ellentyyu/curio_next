@@ -1,0 +1,8 @@
+:root {
+  --font-mrs-sheppards: 'Mrs Sheppards', cursive;
+  --color-primary: #0c381d; /* green */
+  --color-dark: #2e3532; /* dark gray */
+  --color-accent: #ff6700; /* orange 400 */
+  --color-bluegreen: #3e8989; /* blue green */
+  --color-bg: #f2f2f2;
+}

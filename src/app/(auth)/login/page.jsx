@@ -22,7 +22,6 @@ export default async function Login({ searchParams }) {
     if (!result.success) {
       // TODO: add frontend toast notification
       console.log('login error', result.message)
-      return { error: result.message }
     }
     const cookiesStore = await cookies()
     cookiesStore.set('token', result.data.token, {

@@ -1,19 +1,14 @@
 import jwt from 'jsonwebtoken'
 
-export const generateToken = (payload) => {
-  try {
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' })
-  } catch (error) {
-    console.error(error)
-    return null
-  }
+export const generateToken = (userId) => {
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '1h' })
 }
 
 export const verifyToken = (token) => {
   try {
     return jwt.verify(token, process.env.JWT_SECRET)
   } catch (error) {
-    console.error(error)
+    console.error('verifyToken error', error)
     return null
   }
 }
