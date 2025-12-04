@@ -5,41 +5,49 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-
+import { SpinnerIcon } from '@/components/ui/spinner'
 import {
   CheckIcon,
   ClockIcon,
   QuestionMarkCircleIcon,
   XMarkIcon,
 } from '@heroicons/react/20/solid'
-export default function CartList({ isLoggedIn, serverCartItems }) {
+import { useUserStore } from '@/store/userStore'
+export default function CartList() {
+  const [hydrated, setHydrated] = useState(false)
+  useEffect(() => {
+    setHydrated(true)
+  }, [])
+  const { userId } = useUserStore()
   const { cartItems, updateCartItemQuantity, removeFromCart } = useCartStore()
-  const [mergedCartItems, setMergedCartItems] = useState(cartItems)
   const router = useRouter()
   const totalPrice = useMemo(() => {
-    return mergedCartItems.reduce(
+    return cartItems.reduce(
       (acc, product) => acc + product.price * product.quantity,
       0,
     )
-  }, [mergedCartItems])
+  }, [cartItems])
 
   const handleQuantityChange = (e, productId) => {
     const newQuantity = parseInt(e.target.value)
     updateCartItemQuantity(productId, newQuantity)
   }
   const handleCheckout = () => {
-    if (isLoggedIn) {
+    if (userId) {
       router.push('/checkout')
     } else {
       router.push(`/login?redirectTo=${encodeURIComponent('/checkout')}`)
     }
   }
-  useEffect(() => {
-    if (isLoggedIn) {
-      setMergedCartItems(serverCartItems)
-    }
-  }, [serverCartItems, isLoggedIn])
-  return mergedCartItems.length > 0 ? (
+
+  if (!hydrated) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <SpinnerIcon className="size-10 animate-spin" />
+      </div>
+    )
+  }
+  return cartItems.length > 0 ? (
     <form className="mt-12">
       <section aria-labelledby="cart-heading">
         <h2 id="cart-heading" className="sr-only">
@@ -50,7 +58,7 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
           role="list"
           className="divide-y divide-gray-200 border-t border-b border-gray-200"
         >
-          {mergedCartItems.map((product, idx) => (
+          {cartItems.map((product, idx) => (
             <li key={product.id} className="flex py-6 sm:py-10">
               <div className="shrink-0">
                 <Image
@@ -90,7 +98,7 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
                       <select
                         name={`quantity-${product.id}`}
                         aria-label={`Quantity, ${product.name}`}
-                        className="col-start-1 row-start-1 appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                        className="col-start-1 row-start-1 appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:outline-primary sm:text-sm/6"
                         value={product.quantity}
                         onChange={(e) => handleQuantityChange(e, product.id)}
                       >
@@ -134,10 +142,13 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
 
                 <p className="mt-4 flex space-x-2 text-sm text-gray-700">
                   {product.inStock > 0 ? (
-                    <CheckIcon
-                      aria-hidden="true"
-                      className="size-5 shrink-0 text-green-500"
-                    />
+                    <>
+                      <CheckIcon
+                        aria-hidden="true"
+                        className="size-5 shrink-0 text-green-500"
+                      />
+                      <span>In stock</span>
+                    </>
                   ) : (
                     <ClockIcon
                       aria-hidden="true"
@@ -180,7 +191,7 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
         <div className="mt-10">
           <button
             type="button"
-            className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
+            className="w-full cursor-pointer rounded-md border border-transparent bg-primary px-4 py-3 text-base font-medium text-white shadow-xs hover:bg-primary-hover focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
             onClick={handleCheckout}
           >
             Checkout
@@ -192,7 +203,7 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
             or{' '}
             <Link
               href="/product"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-bluegreen hover:text-primary-hover"
             >
               Continue Shopping
               <span aria-hidden="true"> &rarr;</span>
@@ -208,7 +219,10 @@ export default function CartList({ isLoggedIn, serverCartItems }) {
       </p>
       <p className="text-center text-base text-gray-600">
         Check your favorite products or{' '}
-        <Link href="/product" className="text-indigo-600 hover:text-indigo-500">
+        <Link
+          href="/product"
+          className="text-bluegreen hover:text-primary-hover"
+        >
           continue Shopping.
         </Link>
       </p>

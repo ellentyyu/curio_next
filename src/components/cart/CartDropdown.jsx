@@ -18,8 +18,8 @@ export default function CartDropdown() {
           aria-hidden="true"
           className="size-6 shrink-0 text-gray-400 group-hover:text-gray-600"
         />
-        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-          {totalItems}
+        <span className="ml-2 block min-w-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+          {totalItems > 0 ? totalItems : ''}
         </span>
       </Link>
     </div>

@@ -49,7 +49,7 @@ export default async function Login({ searchParams }) {
                 ? `/register?redirectTo=${encodeURIComponent(redirectTo)}`
                 : '/register'
             }
-            className="font-semibold text-primary hover:text-primary-hover dark:text-indigo-400 dark:hover:text-indigo-300"
+            className="font-semibold text-bluegreen hover:text-primary dark:text-indigo-400 dark:hover:text-indigo-300"
           >
             Sign up
           </Link>

@@ -11,13 +11,13 @@ export default async function CartPage() {
     cart = await getCartByUserId(decodedToken.id)
   }
   return (
-    <div className="bg-white">
+    <div className="bg-bg">
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24 lg:px-0">
         <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Shopping Cart
         </h1>
 
-        <CartList isLoggedIn={decodedToken} serverCartItems={cart} />
+        <CartList />
       </div>
     </div>
   )
