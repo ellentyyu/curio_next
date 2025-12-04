@@ -14,7 +14,6 @@ export default function UserMenu() {
     if (result.success) {
       // TODO: toast success
       console.log('logged out in user menu')
-
       router.refresh()
     } else {
       // TODO: toast error

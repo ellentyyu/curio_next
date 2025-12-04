@@ -76,7 +76,7 @@ export default function AddProductForm({ product }) {
           <div className="min-h-[100px]">
             <button
               type="button"
-              className="flex w-full cursor-pointer items-center justify-center rounded-md border border-transparent bg-[#174b2a] px-8 py-3 text-base font-medium text-white hover:bg-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden disabled:cursor-default disabled:bg-[#174b2a]/50"
+              className="flex w-full cursor-pointer items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary-hover focus:ring-2 focus:ring-primary-hover focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden disabled:cursor-default disabled:bg-primary/50"
               onClick={handleAddToCart}
               disabled={adding}
             >
@@ -87,7 +87,7 @@ export default function AddProductForm({ product }) {
                 key={animationKey}
                 className="mt-2 animate-[addedHint_0.4s_ease-out] text-center text-sm text-dark"
               >
-                Added to cart!
+                Added!
               </p>
             )}
           </div>
