@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 export default function CartDropdown() {
   const { cartItems } = useCartStore()
+  console.log('cartItems', cartItems)
 
   const totalItems = cartItems?.reduce(
     (acc, product) => acc + product.quantity,

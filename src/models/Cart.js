@@ -20,27 +20,27 @@ const cartSchema = new Schema(
   { timestamps: true },
 )
 
-cartSchema.set('toJSON', {
-  virtuals: true,
-  versionKey: false,
-  transform: function (_, ret) {
-    ret.id = ret._id.toString()
-    delete ret._id
+// cartSchema.set('toJSON', {
+//   virtuals: true,
+//   versionKey: false,
+//   transform: function (_, ret) {
+//     ret.id = ret._id.toString()
+//     delete ret._id
 
-    if (Array.isArray(ret.items)) {
-      ret.items = ret.items.map((item) => {
-        item.id = item._id.toString()
-        delete item._id
+//     if (Array.isArray(ret.items)) {
+//       ret.items = ret.items.map((item) => {
+//         item.id = item._id.toString()
+//         delete item._id
 
-        if (item.product?._id) {
-          item.product.id = item.product._id.toString()
-          delete item.product._id
-        }
-        return item
-      })
-    }
-    return ret
-  },
-})
+//         if (item.product?._id) {
+//           item.product.id = item.product._id.toString()
+//           delete item.product._id
+//         }
+//         return item
+//       })
+//     }
+//     return ret
+//   },
+// })
 const Cart = mongoose.models.Cart || mongoose.model('Cart', cartSchema)
 export default Cart

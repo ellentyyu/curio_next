@@ -6,7 +6,7 @@ import { useUserStore } from '@/store/userStore'
 import { logout } from '@/lib/user/logout'
 export default function HydrationBridge({ userId, cart }) {
   const router = useRouter()
-  const { cartItems, setCartItems, clearCart } = useCartStore()
+  const { cartItems, setCartItems } = useCartStore()
   const { setUserId, clearUserId } = useUserStore()
   // sync server → client (user)
   useEffect(() => {

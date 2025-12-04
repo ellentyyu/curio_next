@@ -46,7 +46,7 @@ const poppins = Poppins({
 export default async function RootLayout({ children }) {
   const cookiesStore = await cookies()
   const token = cookiesStore.get('token')?.value
-  console.log('layout token', token)
+
   // token expiration breaks on dev mode so we need error handling
   let decodedToken
   try {
@@ -61,7 +61,10 @@ export default async function RootLayout({ children }) {
 
   if (decodedToken) {
     userId = decodedToken.id
-    cart = await getCartByUserId(userId)
+    const result = await getCartByUserId(userId)
+    if (result.success) {
+      cart = result.data.items
+    }
   }
 
   // TODO: seed products if none exist
