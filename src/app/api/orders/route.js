@@ -1,38 +1,48 @@
-import { NextResponse } from 'next/server'
 import { connectDB } from '@/lib/db'
 import Order from '@/models/Order'
 import { cookies } from 'next/headers'
 import { verifyToken } from '@/lib/jwt'
+import { jsonSuccess, jsonFail } from '@/utils/apiResponse'
 export async function POST(request) {
   try {
     await connectDB()
+    // auth
     const cookiesStore = await cookies()
     const token = cookiesStore.get('token')?.value
     const decoded = token ? verifyToken(token) : null
     if (!decoded) {
-      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+      return jsonFail(401, 'Unauthorized')
     }
-    const { userId, items, shippingAddress, paymentMethod, totalPrice } =
+    // parse body
+    const { items, shippingAddress, paymentMethod, totalPrice } =
       await request.json()
 
+    if (!items || items.length === 0) {
+      return jsonFail(400, 'Items are required')
+    }
+    // create order
     const order = await Order.create({
-      user: userId,
+      user: decoded.id,
       items,
       shippingAddress,
       paymentMethod,
       paymentStatus: 'pending',
       totalPrice,
     })
-    return NextResponse.json(
-      {
-        success: true,
-        order: JSON.parse(
-          JSON.stringify({ ...order, id: order._id.toString() }),
-        ),
-      },
-      { status: 201 },
-    )
+    const normalizedOrder = {
+      id: order._id.toString(),
+      userId: order.user.toString(),
+      items: order.items,
+      shippingAddress: order.shippingAddress,
+      paymentMethod: order.paymentMethod,
+      paymentStatus: order.paymentStatus,
+      totalPrice: order.totalPrice,
+      createdAt: order.createdAt,
+    }
+
+    return jsonSuccess(201, normalizedOrder)
   } catch (error) {
-    return NextResponse.json({ message: error.message }, { status: 500 })
+    console.error('create order error', error)
+    return jsonFail(500, 'create order error')
   }
 }

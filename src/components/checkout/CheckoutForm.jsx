@@ -34,13 +34,13 @@ const DUMMY_USER = {
   cvc: '123',
 }
 export default function CheckoutForm({ userId }) {
-  const { cartItems, cartReady, updateCartItemQuantity } = useCartStore()
+  const { cartItems, cartReady, updateCartItemQuantity, clearCart } =
+    useCartStore()
   const [formData, setFormData] = useState(DUMMY_USER)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const postData = {
-      userId,
       items: cartItems.map((item) => ({
         product: item.id,
         quantity: item.quantity,
@@ -63,24 +63,28 @@ export default function CheckoutForm({ userId }) {
         0,
       ),
     }
-    console.log('post data', postData)
 
-    const res = await fetch('/api/orders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(postData),
-    })
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      })
 
-    if (!res.ok) {
-      console.log('create order error', res.message)
-      return { error: res.message }
+      const result = await res.json()
+      if (!result.success) {
+        console.error('create order error', result.error.message)
+        // TODO: show toast
+        return
+      }
+      console.log('result', result.data)
+      clearCart()
+      redirect(`/order/${result.data.id}`)
+    } catch (error) {
+      console.error('create order error', error)
     }
-
-    const data = await res.json()
-    console.log('result', data.order.items)
-    redirect(`/order/${data?.order?.id}`)
   }
   const handleQuantityChange = (e, productId) => {
     const newQuantity = parseInt(e.target.value)
