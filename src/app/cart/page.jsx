@@ -8,7 +8,10 @@ export default async function CartPage() {
   const decodedToken = token ? verifyToken(token) : null
   let cart = null
   if (decodedToken) {
-    cart = await getCartByUserId(decodedToken.id)
+    const result = await getCartByUserId(decodedToken.id)
+    if (result.success) {
+      cart = result.data.items
+    }
   }
   return (
     <div className="bg-bg">

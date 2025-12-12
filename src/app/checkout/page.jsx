@@ -74,7 +74,10 @@ export default async function CheckoutPage() {
   }
   let cart = null
   if (decodedToken) {
-    cart = await getCartByUserId(decodedToken.id)
+    const result = await getCartByUserId(decodedToken.id)
+    if (result.success) {
+      cart = result.data.items
+    }
   }
   return (
     <div className="bg-white">
