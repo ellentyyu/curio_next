@@ -72,18 +72,18 @@ export default async function CheckoutPage() {
   if (!decodedToken) {
     redirect('/login?redirectTo=/checkout')
   }
-  let cart = null
-  if (decodedToken) {
-    const result = await getCartByUserId(decodedToken.id)
-    if (result.success) {
-      cart = result.data.items
-    }
-  }
+  // let cart = null
+  // if (decodedToken) {
+  //   const result = await getCartByUserId(decodedToken.id)
+  //   if (result.success) {
+  //     cart = result.data.items
+  //   }
+  // }
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="sr-only">Checkout</h2>
-        <CheckoutForm cart={cart} userId={decodedToken.id} />
+        <CheckoutForm userId={decodedToken.id} />
       </div>
     </div>
   )

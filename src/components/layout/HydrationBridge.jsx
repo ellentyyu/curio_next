@@ -5,7 +5,7 @@ import { useUserStore } from '@/store/userStore'
 import { logout } from '@/lib/user/logout'
 import { mergeCartItems } from '@/lib/cart/mergeCart'
 export default function HydrationBridge({ userId, cart }) {
-  const { cartItems, setCartItems, clearCart } = useCartStore()
+  const { cartItems, setCartItems, clearCart, setCartReady } = useCartStore()
   const { setUserId, clearUserId } = useUserStore()
 
   const hasInitCartRef = useRef(false)
@@ -38,6 +38,7 @@ export default function HydrationBridge({ userId, cart }) {
           : mergeCartItems(cart, localCart)
 
     setCartItems(merged)
+    setCartReady(true)
     hasInitCartRef.current = true
   }, [cart, userId])
 
@@ -66,6 +67,7 @@ export default function HydrationBridge({ userId, cart }) {
   useEffect(() => {
     if (userId) return
     clearCart()
+    setCartReady(false)
     logout()
   }, [userId])
 

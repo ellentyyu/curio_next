@@ -1,6 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { redirect } from 'next/navigation'
+import { useCartStore } from '@/store/cartStore'
+import { SpinnerIcon } from '@/components/ui/spinner'
 import { CheckCircleIcon, TrashIcon } from '@heroicons/react/24/outline'
 const deliveryMethods = [
   {
@@ -31,15 +33,15 @@ const DUMMY_USER = {
   expirationDate: '12/2025',
   cvc: '123',
 }
-export default function CheckoutForm({ userId, cart }) {
-  const [isLoading, setIsLoading] = useState(false)
+export default function CheckoutForm({ userId }) {
+  const { cartItems, cartReady, updateCartItemQuantity } = useCartStore()
   const [formData, setFormData] = useState(DUMMY_USER)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const postData = {
       userId,
-      items: cart.map((item) => ({
+      items: cartItems.map((item) => ({
         product: item.id,
         quantity: item.quantity,
         price: item.price,
@@ -56,7 +58,7 @@ export default function CheckoutForm({ userId, cart }) {
       },
       paymentMethod: 'mock',
       paymentStatus: 'pending',
-      totalPrice: cart.reduce(
+      totalPrice: cartItems.reduce(
         (acc, product) => acc + product.price * product.quantity,
         0,
       ),
@@ -79,6 +81,10 @@ export default function CheckoutForm({ userId, cart }) {
     const data = await res.json()
     console.log('result', data.order.items)
     redirect(`/order/${data?.order?.id}`)
+  }
+  const handleQuantityChange = (e, productId) => {
+    const newQuantity = parseInt(e.target.value)
+    updateCartItemQuantity(productId, newQuantity)
   }
 
   return (
@@ -105,7 +111,7 @@ export default function CheckoutForm({ userId, cart }) {
                 name="email-address"
                 type="email"
                 autoComplete="email"
-                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                 value={formData.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
@@ -135,7 +141,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="first-name"
                   type="text"
                   autoComplete="given-name"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.firstName}
                   onChange={(e) =>
                     setFormData({ ...formData, firstName: e.target.value })
@@ -158,7 +164,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="last-name"
                   type="text"
                   autoComplete="family-name"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.lastName}
                   onChange={(e) =>
                     setFormData({ ...formData, lastName: e.target.value })
@@ -181,7 +187,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="name"
                   type="text"
                   autoComplete="name"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
@@ -204,7 +210,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="address"
                   type="text"
                   autoComplete="street-address"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.address}
                   onChange={(e) =>
                     setFormData({ ...formData, address: e.target.value })
@@ -226,7 +232,7 @@ export default function CheckoutForm({ userId, cart }) {
               id="apartment"
               name="apartment"
               type="text"
-              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
             />
           </div>
         </div> */}
@@ -244,7 +250,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="city"
                   type="text"
                   autoComplete="address-level2"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.city}
                   onChange={(e) =>
                     setFormData({ ...formData, city: e.target.value })
@@ -267,7 +273,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="region"
                   type="text"
                   autoComplete="address-level1"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.state}
                   onChange={(e) =>
                     setFormData({ ...formData, state: e.target.value })
@@ -289,7 +295,7 @@ export default function CheckoutForm({ userId, cart }) {
                   id="country"
                   name="country"
                   autoComplete="country-name"
-                  className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:outline-primary sm:text-sm/6"
                 >
                   <option>United States</option>
                   <option>Canada</option>
@@ -315,7 +321,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="postal-code"
                   type="text"
                   autoComplete="postal-code"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.zip}
                   onChange={(e) =>
                     setFormData({ ...formData, zip: e.target.value })
@@ -338,7 +344,7 @@ export default function CheckoutForm({ userId, cart }) {
                   key={deliveryMethod.id}
                   aria-label={deliveryMethod.title}
                   aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.price}`}
-                  className="group relative flex rounded-lg border border-gray-300 bg-white p-4 has-checked:outline-2 has-checked:-outline-offset-2 has-checked:outline-indigo-600 has-focus-visible:outline-3 has-focus-visible:-outline-offset-1 has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
+                  className="group relative flex rounded-lg border border-gray-300 bg-white p-4 has-checked:outline-2 has-checked:-outline-offset-2 has-checked:outline-primary has-focus-visible:outline-3 has-focus-visible:-outline-offset-1 has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
                 >
                   <input
                     defaultValue={deliveryMethod.id}
@@ -382,7 +388,7 @@ export default function CheckoutForm({ userId, cart }) {
                     id={paymentMethod.id}
                     name="payment-type"
                     type="radio"
-                    className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
+                    className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                   />
                   <label
                     htmlFor={paymentMethod.id}
@@ -409,7 +415,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="card-number"
                   type="text"
                   autoComplete="cc-number"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.cardNumber}
                   onChange={(e) =>
                     setFormData({ ...formData, cardNumber: e.target.value })
@@ -432,7 +438,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="name-on-card"
                   type="text"
                   autoComplete="cc-name"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.nameOnCard}
                   onChange={(e) =>
                     setFormData({ ...formData, nameOnCard: e.target.value })
@@ -455,7 +461,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="expiration-date"
                   type="text"
                   autoComplete="cc-exp"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.expirationDate}
                   onChange={(e) =>
                     setFormData({ ...formData, expirationDate: e.target.value })
@@ -478,7 +484,7 @@ export default function CheckoutForm({ userId, cart }) {
                   name="cvc"
                   type="text"
                   autoComplete="csc"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
                   value={formData.cvc}
                   onChange={(e) =>
                     setFormData({ ...formData, cvc: e.target.value })
@@ -494,39 +500,40 @@ export default function CheckoutForm({ userId, cart }) {
       {/* Order summary */}
       <div className="mt-10 lg:mt-0">
         <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
-
-        <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-xs">
-          <h3 className="sr-only">Items in your cart</h3>
-          <ul role="list" className="divide-y divide-gray-200">
-            {cart.map((product) => (
-              <li key={product.id} className="flex px-4 py-6 sm:px-6">
-                <div className="shrink-0">
-                  <img
-                    alt={product.name}
-                    src={product.image}
-                    className="w-20 rounded-md"
-                  />
-                </div>
-
-                <div className="ml-6 flex flex-1 flex-col">
-                  <div className="flex">
-                    <div className="min-w-0 flex-1">
-                      <h4 className="text-sm">
-                        <a
-                          href={`/product/${product.id}`}
-                          className="font-medium text-gray-700 hover:text-gray-800"
-                        >
-                          {product.name}
-                        </a>
-                      </h4>
-                      <p className="mt-1 text-sm text-gray-500">
-                        {product.color.join(', ')}
-                      </p>
-                      <p className="mt-1 text-sm text-gray-500">
-                        {product.quantity} x {product.price}
-                      </p>
+        {cartReady ? (
+          <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-xs">
+            <h3 className="sr-only">Items in your cart</h3>
+            <>
+              <ul role="list" className="divide-y divide-gray-200">
+                {cartItems.map((product) => (
+                  <li key={product.id} className="flex px-4 py-6 sm:px-6">
+                    <div className="shrink-0">
+                      <img
+                        alt={product.name}
+                        src={product.image}
+                        className="w-20 rounded-md"
+                      />
                     </div>
-                    {/* 
+
+                    <div className="ml-6 flex flex-1 flex-col">
+                      <div className="flex">
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-sm">
+                            <a
+                              href={`/product/${product.id}`}
+                              className="font-medium text-gray-700 hover:text-gray-800"
+                            >
+                              {product.name}
+                            </a>
+                          </h4>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {product.color.join(', ')}
+                          </p>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {product.quantity} x {product.price}
+                          </p>
+                        </div>
+                        {/* 
                     <div className="ml-4 flow-root shrink-0">
                       <button
                         type="button"
@@ -536,91 +543,100 @@ export default function CheckoutForm({ userId, cart }) {
                         <TrashIcon aria-hidden="true" className="size-5" />
                       </button>
                     </div> */}
-                    <div className="ml-4">
-                      <div className="grid grid-cols-1">
-                        <select
-                          id="quantity"
-                          name="quantity"
-                          aria-label="Quantity"
-                          className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                        >
-                          {Array.from(
-                            { length: product.inStock },
-                            (_, index) => (
-                              <option key={index} value={index + 1}>
-                                {index + 1}
-                              </option>
-                            ),
-                          )}
-                        </select>
+                        <div className="ml-4">
+                          <div className="grid grid-cols-1">
+                            <select
+                              name={`quantity-${product.id}`}
+                              aria-label={`Quantity, ${product.name}`}
+                              className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:outline-primary sm:text-sm/6"
+                              value={product.quantity}
+                              onChange={(e) =>
+                                handleQuantityChange(e, product.id)
+                              }
+                            >
+                              {Array.from(
+                                { length: product.inStock },
+                                (_, index) => (
+                                  <option key={index} value={index + 1}>
+                                    {index + 1}
+                                  </option>
+                                ),
+                              )}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-1 items-end justify-between pt-2">
+                        <p className="mt-1 text-sm font-medium text-gray-900">
+                          $ {product.price * product.quantity}
+                        </p>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="flex flex-1 items-end justify-between pt-2">
-                    <p className="mt-1 text-sm font-medium text-gray-900">
-                      $ {product.price * product.quantity}
-                    </p>
-                  </div>
+                  </li>
+                ))}
+              </ul>
+              <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
+                <div className="flex items-center justify-between">
+                  <dt className="text-sm">Subtotal</dt>
+                  <dd className="text-sm font-medium text-gray-900">
+                    ${' '}
+                    {cartItems.reduce(
+                      (acc, product) => acc + product.price * product.quantity,
+                      0,
+                    )}
+                  </dd>
                 </div>
-              </li>
-            ))}
-          </ul>
-          <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
-            <div className="flex items-center justify-between">
-              <dt className="text-sm">Subtotal</dt>
-              <dd className="text-sm font-medium text-gray-900">
-                ${' '}
-                {cart.reduce(
-                  (acc, product) => acc + product.price * product.quantity,
-                  0,
-                )}
-              </dd>
-            </div>
-            <div className="flex items-center justify-between">
-              <dt className="text-sm">Shipping</dt>
-              <dd className="text-sm font-medium text-gray-900">$5.00</dd>
-            </div>
-            <div className="flex items-center justify-between">
-              <dt className="text-sm">Taxes</dt>
-              <dd className="text-sm font-medium text-gray-900">
-                ${' '}
-                {cart
-                  .reduce(
-                    (acc, product) =>
-                      acc + product.price * product.quantity * 0.05,
-                    0,
-                  )
-                  .toFixed(2)}
-              </dd>
-            </div>
-            <div className="flex items-center justify-between border-t border-gray-200 pt-6">
-              <dt className="text-base font-medium">Total</dt>
-              <dd className="text-base font-medium text-gray-900">
-                ${' '}
-                {cart.reduce(
-                  (acc, product) => acc + product.price * product.quantity,
-                  0,
-                ) +
-                  5 +
-                  cart.reduce(
-                    (acc, product) =>
-                      acc + product.price * product.quantity * 0.05,
-                    0,
-                  )}
-              </dd>
-            </div>
-          </dl>
+                <div className="flex items-center justify-between">
+                  <dt className="text-sm">Shipping</dt>
+                  <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-sm">Taxes</dt>
+                  <dd className="text-sm font-medium text-gray-900">
+                    ${' '}
+                    {cartItems
+                      .reduce(
+                        (acc, product) =>
+                          acc + product.price * product.quantity * 0.05,
+                        0,
+                      )
+                      .toFixed(2)}
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between border-t border-gray-200 pt-6">
+                  <dt className="text-base font-medium">Total</dt>
+                  <dd className="text-base font-medium text-gray-900">
+                    ${' '}
+                    {cartItems.reduce(
+                      (acc, product) => acc + product.price * product.quantity,
+                      0,
+                    ) +
+                      5 +
+                      cartItems.reduce(
+                        (acc, product) =>
+                          acc + product.price * product.quantity * 0.05,
+                        0,
+                      )}
+                  </dd>
+                </div>
+              </dl>
 
-          <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-            <button
-              type="submit"
-              className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
-            >
-              Confirm order
-            </button>
+              <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                <button
+                  type="submit"
+                  className="w-full cursor-pointer rounded-md border border-transparent bg-primary px-4 py-3 text-base font-medium text-white shadow-xs hover:bg-primary-hover focus:ring-2 focus:ring-primary-hover focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
+                >
+                  Confirm order
+                </button>
+              </div>
+            </>
           </div>
-        </div>
+        ) : (
+          <div className="flex justify-center py-10">
+            <SpinnerIcon className="size-10 animate-spin" />
+          </div>
+        )}
       </div>
     </form>
   )
