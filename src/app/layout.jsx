@@ -68,10 +68,15 @@ export default async function RootLayout({ children }) {
   }
 
   // TODO: seed products if none exist
-  const products = await getProducts({})
-  if (products.length === 0) {
+  let products = null
+  const result = await getProducts({})
+  if (result.success && result.data.products.length === 0) {
     await seedProducts()
   }
+  if (result.success) {
+    products = result.data.products
+  }
+
   return (
     <html
       lang="en"

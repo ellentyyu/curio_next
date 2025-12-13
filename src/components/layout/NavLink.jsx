@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 export default function NavLink({ category }) {
   const searchParams = useSearchParams()
-  const searchCategory = searchParams.get('category') ?? 'all'
+  const searchCategory = searchParams.get('category') ?? 'everything (for now)'
   const isActive = searchCategory === category.name
   return (
     <Link
@@ -14,7 +14,7 @@ export default function NavLink({ category }) {
       className={`text-md flex items-center hover:font-bold ${isActive ? 'font-bold' : ''}`}
     >
       {category.id === 0
-        ? 'All'
+        ? 'Everything'
         : `${category.name.charAt(0).toUpperCase()}${category.name.slice(1)}`}
     </Link>
   )

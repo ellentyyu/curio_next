@@ -103,10 +103,14 @@ function classNames(...classes) {
 
 export default async function ProductDetailPage({ params }) {
   const { id } = await params
-  const product = await getProductById(id)
-  if (!product) {
-    notFound()
+  const result = await getProductById(id)
+  if (!result.success) {
+    if (result.status === 404) {
+      notFound()
+    }
+    throw new Error(result.error.message)
   }
+  const product = result.data.product
 
   return (
     <div className="bg-gray-50">
