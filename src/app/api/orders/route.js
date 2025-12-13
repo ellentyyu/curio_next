@@ -20,10 +20,18 @@ export async function POST(request) {
     if (!items || items.length === 0) {
       return jsonFail(400, 'Items are required')
     }
+    const snapshotItems = items.map((item) => ({
+      productId: item.product, // reference only
+      quantity: item.quantity,
+      image: item.image,
+      price: item.price,
+      color: item.color,
+      name: item.name,
+    }))
     // create order
     const order = await Order.create({
       user: decoded.id,
-      items,
+      items: snapshotItems,
       shippingAddress,
       paymentMethod,
       paymentStatus: 'pending',
@@ -32,7 +40,15 @@ export async function POST(request) {
     const normalizedOrder = {
       id: order._id.toString(),
       userId: order.user.toString(),
-      items: order.items,
+      items: order.items.map((item) => ({
+        id: item._id.toString(),
+        productId: item.productId,
+        image: item.image,
+        quantity: item.quantity,
+        price: item.price,
+        color: item.color,
+        name: item.name,
+      })),
       shippingAddress: order.shippingAddress,
       paymentMethod: order.paymentMethod,
       paymentStatus: order.paymentStatus,

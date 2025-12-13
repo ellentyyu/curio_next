@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useCartStore } from '@/store/cartStore'
 import { SpinnerIcon } from '@/components/ui/spinner'
 import { CheckCircleIcon, TrashIcon } from '@heroicons/react/24/outline'
@@ -33,19 +33,25 @@ const DUMMY_USER = {
   expirationDate: '12/2025',
   cvc: '123',
 }
-export default function CheckoutForm({ userId }) {
+export default function CheckoutForm() {
+  const router = useRouter()
   const { cartItems, cartReady, updateCartItemQuantity, clearCart } =
     useCartStore()
+
   const [formData, setFormData] = useState(DUMMY_USER)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsSubmitting(true)
     const postData = {
       items: cartItems.map((item) => ({
         product: item.id,
         quantity: item.quantity,
         price: item.price,
         color: item.color,
+        name: item.name,
+        image: item.image,
       })),
       shippingAddress: {
         name: formData.name,
@@ -81,9 +87,11 @@ export default function CheckoutForm({ userId }) {
       }
       console.log('result', result.data)
       clearCart()
-      redirect(`/order/${result.data.id}`)
+      router.push(`/order/${result.data.id}`)
     } catch (error) {
       console.error('create order error', error)
+    } finally {
+      setIsSubmitting(false)
     }
   }
   const handleQuantityChange = (e, productId) => {
@@ -593,21 +601,21 @@ export default function CheckoutForm({ userId }) {
                 </div>
                 <div className="flex items-center justify-between">
                   <dt className="text-sm">Shipping</dt>
-                  <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                  <dd className="text-sm font-medium text-gray-900">$ 50</dd>
                 </div>
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                   <dt className="text-sm">Taxes</dt>
                   <dd className="text-sm font-medium text-gray-900">
                     ${' '}
-                    {cartItems
-                      .reduce(
+                    {Math.round(
+                      cartItems.reduce(
                         (acc, product) =>
                           acc + product.price * product.quantity * 0.05,
                         0,
-                      )
-                      .toFixed(2)}
+                      ),
+                    )}
                   </dd>
-                </div>
+                </div> */}
                 <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                   <dt className="text-base font-medium">Total</dt>
                   <dd className="text-base font-medium text-gray-900">
@@ -615,13 +623,7 @@ export default function CheckoutForm({ userId }) {
                     {cartItems.reduce(
                       (acc, product) => acc + product.price * product.quantity,
                       0,
-                    ) +
-                      5 +
-                      cartItems.reduce(
-                        (acc, product) =>
-                          acc + product.price * product.quantity * 0.05,
-                        0,
-                      )}
+                    ) + 50}
                   </dd>
                 </div>
               </dl>
@@ -629,9 +631,10 @@ export default function CheckoutForm({ userId }) {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <button
                   type="submit"
-                  className="w-full cursor-pointer rounded-md border border-transparent bg-primary px-4 py-3 text-base font-medium text-white shadow-xs hover:bg-primary-hover focus:ring-2 focus:ring-primary-hover focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden"
+                  className="w-full cursor-pointer rounded-md border border-transparent bg-primary px-4 py-3 text-base font-medium text-white shadow-xs hover:bg-primary-hover focus:ring-2 focus:ring-primary-hover focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden disabled:cursor-default disabled:bg-primary/50"
+                  disabled={isSubmitting}
                 >
-                  Confirm order
+                  {isSubmitting ? 'Ordering...' : 'Confirm order'}
                 </button>
               </div>
             </>

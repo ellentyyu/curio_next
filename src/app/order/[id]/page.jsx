@@ -1,33 +1,32 @@
 import { getOrderById } from '@/lib/actions/orderActions'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-const products = [
-  {
-    id: 1,
-    name: 'Cold Brew Bottle',
-    description:
-      'This glass bottle comes with a mesh insert for steeping tea or cold-brewing coffee. Pour from any angle and remove the top for easy cleaning.',
-    href: '#',
-    quantity: 1,
-    price: '$32.00',
-    imageSrc:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/confirmation-page-05-product-01.jpg',
-    imageAlt: 'Glass bottle with black plastic pour top and mesh insert.',
-  },
-]
+import { cookies } from 'next/headers'
+import { verifyToken } from '@/lib/jwt'
+import { redirect } from 'next/navigation'
 
 export default async function OrderPage({ params }) {
   const { id } = await params
-  const order = await getOrderById(id)
-  console.log('order', order)
-  if (!order) {
+  const cookiesStore = await cookies()
+  const token = cookiesStore.get('token')?.value
+  const decodedToken = token ? verifyToken(token) : null
+  if (!decodedToken) {
+    redirect(`/login?redirectTo=/order/${id}`)
+  }
+
+  let order = null
+  const result = await getOrderById(id)
+  if (!result.success) {
+    console.error('order not found', result.error.message)
     notFound()
   }
+  order = result.data
+  console.log('order', order)
   return (
-    <div className="bg-white">
+    <div className="bg-bg">
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div className="max-w-xl">
-          <h1 className="text-base font-medium text-indigo-600">Thank you!</h1>
+          <h1 className="text-base font-medium text-accent">Thank you!</h1>
           <p className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
             It's on the way!
           </p>
@@ -37,7 +36,7 @@ export default async function OrderPage({ params }) {
 
           <dl className="mt-12 text-sm font-medium">
             <dt className="text-gray-900">Tracking number</dt>
-            <dd className="mt-2 text-indigo-600">51547878755545848512</dd>
+            <dd className="mt-2 text-dark">51547878755545848512</dd>
           </dl>
         </div>
 
@@ -51,8 +50,8 @@ export default async function OrderPage({ params }) {
               className="flex space-x-6 border-b border-gray-200 py-10"
             >
               <Image
-                alt={item.product.name}
-                src={item.product.image}
+                alt={item.name}
+                src={item.image}
                 className="size-20 flex-none rounded-lg bg-gray-100 object-cover sm:size-40"
                 width={160}
                 height={160}
@@ -60,9 +59,7 @@ export default async function OrderPage({ params }) {
               <div className="flex flex-auto flex-col">
                 <div>
                   <h4 className="font-medium text-gray-900">
-                    <a href={`/product/${item.product.id}`}>
-                      {item.product.name}
-                    </a>
+                    <a href={`/product/${item.productId}`}>{item.name}</a>
                     {/* <p className="text-gray-500 text-sm">
                       {item.product.description}
                     </p> */}
