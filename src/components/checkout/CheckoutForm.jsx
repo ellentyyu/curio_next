@@ -539,7 +539,9 @@ export default function CheckoutForm() {
                             </a>
                           </h4>
                           <p className="mt-1 text-sm text-gray-500">
-                            {product.color.join(', ')}
+                            {product.color.length > 0
+                              ? product.color.join(', ')
+                              : ''}
                           </p>
                           <p className="mt-1 text-sm text-gray-500">
                             {product.quantity} x {product.price}

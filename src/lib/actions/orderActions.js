@@ -2,14 +2,19 @@ import { connectDB } from '@/lib/db'
 import Order from '@/models/Order'
 import { success, fail } from '@/lib/response'
 
-export const getOrderById = async (id) => {
+export const getOrderById = async (id, userId) => {
   try {
     await connectDB()
     const order = await Order.findById(id).lean()
     if (!order) {
       return fail(404, 'order not found')
     }
+    if (order.user.toString() !== userId) {
+      return fail(403, 'forbidden')
+    }
+
     return success(200, {
+      userId: order.user.toString(),
       id: order._id.toString(),
       items: order.items.map((item) => ({
         id: item._id.toString(),

@@ -15,10 +15,13 @@ export default async function OrderPage({ params }) {
   }
 
   let order = null
-  const result = await getOrderById(id)
+  const result = await getOrderById(id, decodedToken.id)
   if (!result.success) {
-    console.error('order not found', result.error.message)
-    notFound()
+    if (result.status === 404 || result.status === 403) {
+      notFound()
+    }
+    // only real server error reaches here
+    throw new Error(result.error.message)
   }
   order = result.data
   console.log('order', order)

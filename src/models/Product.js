@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
   category: { type: String, required: true },
   gallery: { type: [String], required: false },
   tags: { type: [String], required: false },
-  color: { type: [String], required: false },
+  color: { type: [String], default: [] },
   rating: { type: Number, required: true },
   reviewCount: { type: Number, required: true },
   inStock: { type: Number, required: true },
