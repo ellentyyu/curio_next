@@ -76,13 +76,24 @@ export default function ProductFilter() {
   )
 
   const handleFilterChange = (filter, value) => {
-    setSelectedFilters((prev) => ({
-      ...prev,
-      [filter]: prev[filter].map((option) => ({
-        ...option,
-        checked: option.value === value ? !option.checked : option.checked,
-      })),
-    }))
+    // setSelectedFilters((prev) => ({
+    //   ...prev,
+    //   [filter]: prev[filter].map((option) => ({
+    //     ...option,
+    //     checked: option.value === value ? !option.checked : option.checked,
+    //   })),
+    // }))
+    const params = new URLSearchParams(searchParams)
+
+    const current = params.get(filter)?.split(',') ?? []
+    const next = current.includes(value)
+      ? current.filter((v) => v !== value)
+      : [...current, value]
+
+    if (next.length > 0) params.set(filter, next.join(','))
+    else params.delete(filter)
+
+    router.replace(`/product?${params.toString()}`, { scroll: false })
   }
 
   const filterCount = Object.values(selectedFilters).reduce((acc, filter) => {
@@ -91,10 +102,9 @@ export default function ProductFilter() {
   const [sort, setSort] = useState(searchParams.get('sort') || 'newest')
 
   const handleSortChange = (sort) => {
-    setSort(sort)
     const params = new URLSearchParams(searchParams)
     params.set('sort', sort)
-    router.push(`/product?${params.toString()}`)
+    router.replace(`/product?${params.toString()}`, { scroll: false })
   }
   // sync url params to selected filters
   useEffect(() => {
@@ -116,15 +126,15 @@ export default function ProductFilter() {
   }, [searchParams])
 
   // sync selected filters to url params
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams)
-    for (const [filter, options] of Object.entries(selectedFilters)) {
-      const active = options.filter((o) => o.checked).map((o) => o.value)
-      if (active.length > 0) params.set(filter, active.join(','))
-      else params.delete(filter)
-    }
-    router.push(`/product?${params.toString()}`)
-  }, [selectedFilters])
+  // useEffect(() => {
+  //   const params = new URLSearchParams(searchParams)
+  //   for (const [filter, options] of Object.entries(selectedFilters)) {
+  //     const active = options.filter((o) => o.checked).map((o) => o.value)
+  //     if (active.length > 0) params.set(filter, active.join(','))
+  //     else params.delete(filter)
+  //   }
+  //   router.push(`/product?${params.toString()}`)
+  // }, [selectedFilters])
 
   return (
     <>

@@ -1,5 +1,6 @@
 import { connectDB } from '@/lib/db'
 import Product from '@/models/Product'
+import { success, fail } from '@/lib/response'
 const productsTest = [
   {
     id: 1,
@@ -90,66 +91,80 @@ export const seedProducts = async () => {
   await connectDB()
   await Product.insertMany(productsTest)
 }
+const normalizeProduct = (product) => ({
+  id: product._id.toString(),
+  name: product.name,
+  price: product.price,
+  image: product.image ?? null,
+  category: product.category,
+  color: product.color ?? [],
+  tags: product.tags ?? [],
+  inStock: product.inStock ?? false,
+  description: product.description ?? '',
+  createdAt: product.createdAt,
+})
 export const getProducts = async (params) => {
-  await connectDB()
-  const { category, price, color, tag, sort } = params
-  // Build query object
-  const query = {}
+  try {
+    await connectDB()
+    const { category, price, color, tag, sort } = params
+    // Build query object
+    const query = {}
 
-  // Filter by category
-  if (category) {
-    query.category = category
-  }
-
-  // Filter by price
-  if (price) {
-    const selectedPrice = price.split(',')
-    // Convert to numbers and find the minimum price threshold
-    const minPrice = Math.min(...selectedPrice.map((p) => Number(p)))
-    query.price = { $gte: minPrice }
-  }
-
-  // Filter by color
-  if (color) {
-    const selectedColors = color.split(',')
-    query.color = { $in: selectedColors }
-  }
-
-  // Filter by tag
-  if (tag) {
-    const selectedTags = tag.split(',')
-    query.tags = { $in: selectedTags }
-  }
-
-  // Build sort object
-  let sortObj = {}
-  if (sort) {
-    if (sort === 'newest') {
-      sortObj = { createdAt: -1 }
-    } else if (sort === 'price-asc') {
-      sortObj = { price: 1 }
-    } else if (sort === 'price-desc') {
-      sortObj = { price: -1 }
+    // Filter by category
+    if (category) {
+      query.category = category
     }
+
+    // Filter by price
+    if (price) {
+      const selectedPrice = price.split(',').map(Number)
+      query.price = { $gte: Math.min(...selectedPrice) }
+    }
+
+    // Filter by color
+    if (color) {
+      query.color = { $in: color.split(',') }
+    }
+
+    // Filter by tag
+    if (tag) {
+      query.tags = { $in: tag.split(',') }
+    }
+
+    // Build sort object
+    let sortObj = {}
+    if (sort) {
+      if (sort === 'newest') {
+        sortObj = { createdAt: -1 }
+      } else if (sort === 'price-asc') {
+        sortObj = { price: 1 }
+      } else if (sort === 'price-desc') {
+        sortObj = { price: -1 }
+      }
+    }
+
+    // Execute query
+    const products = await Product.find(query).sort(sortObj).lean()
+    const parsedProducts = products.map(normalizeProduct)
+
+    return success(200, { products: parsedProducts })
+  } catch (error) {
+    console.error('get products error', error)
+    return fail(500, 'get products failed')
   }
-
-  // Execute query
-  const filteredProducts = await Product.find(query).sort(sortObj).lean()
-  const products = filteredProducts.map((product) => {
-    return JSON.parse(
-      JSON.stringify({ ...product, id: product._id.toString() }),
-    )
-  })
-
-  return products
 }
 
 export const getProductById = async (id) => {
-  await connectDB()
+  try {
+    await connectDB()
 
-  const product = await Product.findById(id).lean()
-
-  return product
-    ? JSON.parse(JSON.stringify({ ...product, id: product._id.toString() }))
-    : null
+    const product = await Product.findById(id).lean()
+    if (!product) {
+      return fail(404, 'product not found')
+    }
+    return success(200, { product: normalizeProduct(product) })
+  } catch (error) {
+    console.error('get product by id error', error)
+    return fail(500, 'get product by id failed')
+  }
 }

@@ -8,7 +8,11 @@ export default async function ProductGrid({
   tag,
   sort,
 }) {
-  let products = await getProducts({ category, price, color, tag, sort })
+  const result = await getProducts({ category, price, color, tag, sort })
+  if (!result.success) {
+    return <div>Error: {result.message}</div>
+  }
+  const products = result.data.products
   const testProduct = [
     // {
     //   id: 4536,
@@ -179,7 +183,7 @@ export default async function ProductGrid({
     //   updatedAt: new Date(),
     // },
   ]
-  products = [...products, ...testProduct]
+
   return (
     <section
       aria-labelledby="products-heading"
