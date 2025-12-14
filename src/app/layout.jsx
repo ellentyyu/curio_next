@@ -14,9 +14,6 @@ import { logout } from '@/lib/user/logout'
 export const metadata = {
   title: 'Curio Store',
   template: '%s | Curio Store',
-  icons: {
-    icon: '/curio-favicon.svg',
-  },
   description: 'Shop for your quirkiness',
 }
 
