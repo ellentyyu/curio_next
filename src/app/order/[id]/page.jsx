@@ -24,7 +24,6 @@ export default async function OrderPage({ params }) {
     throw new Error(result.error.message)
   }
   order = result.data
-  console.log('order', order)
   return (
     <div className="bg-bg">
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
