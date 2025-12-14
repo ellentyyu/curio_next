@@ -11,7 +11,7 @@ const productsTest = [
     price: 100,
     image:
       'https://images.unsplash.com/photo-1625577379990-ed6457d8beb0?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'portable lives',
+    category: 'portable',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-09.jpg',
@@ -32,7 +32,7 @@ const productsTest = [
     price: 42,
     image:
       'https://images.unsplash.com/photo-1752833102516-d810df87d1b9?q=80&w=1154&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'desk rituals',
+    category: 'rituals',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -52,7 +52,7 @@ const productsTest = [
     price: 29,
     image:
       'https://images.unsplash.com/photo-1585327969772-17d7940f1a21?q=80&w=818&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'portable lives',
+    category: 'portable',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -72,7 +72,7 @@ const productsTest = [
     price: 55,
     image:
       'https://images.unsplash.com/photo-1680786707341-3997abf85091?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'desk rituals',
+    category: 'rituals',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -92,7 +92,7 @@ const productsTest = [
     price: 12,
     image:
       'https://images.unsplash.com/photo-1655151867981-4b162982aab3?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'small obsessions',
+    category: 'obsessions',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -112,7 +112,7 @@ const productsTest = [
     price: 18,
     image:
       'https://images.unsplash.com/photo-1763616426659-6fcd6d0a9ac1?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'portable lives',
+    category: 'portable',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -132,7 +132,7 @@ const productsTest = [
     price: 75,
     image:
       'https://images.unsplash.com/photo-1653478986313-bdbbecd74323?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'small obsessions',
+    category: 'obsessions',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -152,7 +152,7 @@ const productsTest = [
     price: 64,
     image:
       'https://images.unsplash.com/photo-1583496597521-a34048bdbfcd?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'portable lives',
+    category: 'portable',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -172,7 +172,7 @@ const productsTest = [
     price: 23,
     image:
       'https://images.unsplash.com/photo-1639689247459-939cc7b7181d?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'small obsessions',
+    category: 'obsessions',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -192,7 +192,7 @@ const productsTest = [
     price: 88,
     image:
       'https://images.unsplash.com/photo-1742976650166-f657fa5c26ed?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'desk rituals',
+    category: 'rituals',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -212,7 +212,7 @@ const productsTest = [
     price: 120,
     image:
       'https://images.unsplash.com/photo-1711915506137-dd9e9b3488a1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'portable lives',
+    category: 'portable',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -232,7 +232,7 @@ const productsTest = [
     price: 15,
     image:
       'https://images.unsplash.com/photo-1677519418984-a8e546fc70f2?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'desk rituals',
+    category: 'rituals',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],
@@ -252,7 +252,7 @@ const productsTest = [
     price: 47,
     image:
       'https://images.unsplash.com/photo-1570974774239-825ea88af94d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'small obsessions',
+    category: 'obsessions',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
     ],

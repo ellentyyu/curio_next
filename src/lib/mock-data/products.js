@@ -1,21 +1,21 @@
 export const categories = [
   {
     id: 1,
-    name: 'desk rituals',
+    name: 'rituals',
     description:
       'Tools for people who pretend their desk is chaos but secretly care a lot. Containers, organizers, and objects that make sitting still feel intentional.',
     subcategories: [],
   },
   {
     id: 2,
-    name: 'small obsessions',
+    name: 'obsessions',
     description:
       'Things you don’t need, but keep anyway. Accessories that exist somewhere between habit, comfort, and mild fixation.',
     subcategories: [],
   },
   {
     id: 3,
-    name: 'portable lives',
+    name: 'portable',
     description:
       'Objects designed to move with you. For airports, trains, hotel rooms, and the feeling that you’re temporarily someone else.',
     subcategories: [],

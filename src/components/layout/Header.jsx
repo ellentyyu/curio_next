@@ -283,10 +283,10 @@ export default async function Header() {
           <div className="border-b border-gray-200">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="flex h-16 items-center justify-between">
-                <NavMobile />
+                <NavMobile categories={categories} />
 
                 {/* menus */}
-                <div className="flex h-full items-center space-x-8 lg:flex-1">
+                <div className="hidden h-full items-center space-x-8 lg:flex lg:flex-1">
                   {categories.map((category) => (
                     <NavLink key={category.name} category={category} />
                   ))}
