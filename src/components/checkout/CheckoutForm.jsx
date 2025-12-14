@@ -4,6 +4,7 @@ import { redirect, useRouter } from 'next/navigation'
 import { useCartStore } from '@/store/cartStore'
 import { SpinnerIcon } from '@/components/ui/spinner'
 import { CheckCircleIcon, TrashIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 const deliveryMethods = [
   {
     id: 1,
@@ -520,10 +521,12 @@ export default function CheckoutForm() {
                 {cartItems.map((product) => (
                   <li key={product.id} className="flex px-4 py-6 sm:px-6">
                     <div className="shrink-0">
-                      <img
+                      <Image
                         alt={product.name}
                         src={product.image}
                         className="w-20 rounded-md"
+                        width={80}
+                        height={80}
                       />
                     </div>
 

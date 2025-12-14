@@ -17,7 +17,7 @@ export default function HydrationBridge({ userId, cart }) {
       clearUserId()
       hasInitCartRef.current = false // reset for next login
     }
-  }, [userId])
+  }, [userId, setUserId, clearUserId])
 
   // sync server → client (cart init/ merge)
   // run once after login
@@ -40,7 +40,7 @@ export default function HydrationBridge({ userId, cart }) {
     setCartItems(merged)
     setCartReady(true)
     hasInitCartRef.current = true
-  }, [cart, userId])
+  }, [cart, userId, cartItems, setCartItems, setCartReady])
 
   // sync client → server (cart)
   // run after init, whenever cart changes
@@ -69,7 +69,7 @@ export default function HydrationBridge({ userId, cart }) {
     clearCart()
     setCartReady(false)
     logout()
-  }, [userId])
+  }, [userId, clearCart, setCartReady])
 
   return null
 }

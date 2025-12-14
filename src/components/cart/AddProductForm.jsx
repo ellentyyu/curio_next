@@ -78,9 +78,13 @@ export default function AddProductForm({ product }) {
               type="button"
               className="flex w-full cursor-pointer items-center justify-center rounded-md border border-transparent bg-primary px-8 py-3 text-base font-medium text-white hover:bg-primary-hover focus:ring-2 focus:ring-primary-hover focus:ring-offset-2 focus:ring-offset-gray-50 focus:outline-hidden disabled:cursor-default disabled:bg-primary/50"
               onClick={handleAddToCart}
-              disabled={adding}
+              disabled={adding || product.inStock === 0}
             >
-              {adding ? 'Adding...' : 'Add to bag'}
+              {adding
+                ? 'Adding...'
+                : product.inStock === 0
+                  ? 'Out of stock'
+                  : 'Add to bag'}
             </button>
             {animationKey > 0 && (
               <p

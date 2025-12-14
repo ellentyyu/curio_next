@@ -3,6 +3,7 @@ import { verifyToken } from '@/lib/jwt'
 import { redirect } from 'next/navigation'
 import { getOrdersByUserId } from '@/lib/actions/orderActions'
 import { XMarkIcon } from '@heroicons/react/20/solid'
+import Image from 'next/image'
 
 export default async function OrdersPage() {
   const cookiesStore = await cookies()
@@ -70,10 +71,12 @@ export default async function OrdersPage() {
                 {order.items.map((item) => (
                   <div key={item.id} className="py-6 sm:flex">
                     <div className="flex space-x-4 sm:min-w-0 sm:flex-1 sm:space-x-6 lg:space-x-8">
-                      <img
+                      <Image
                         alt={item.name}
                         src={item.image}
                         className="size-20 flex-none rounded-md object-cover sm:size-48"
+                        width={192}
+                        height={192}
                       />
                       <div className="flex min-w-0 flex-1 flex-col pt-1.5 sm:pt-0">
                         <h3 className="text-sm text-gray-900">

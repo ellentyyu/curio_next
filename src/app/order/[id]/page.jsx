@@ -31,7 +31,7 @@ export default async function OrderPage({ params }) {
         <div className="max-w-xl">
           <h1 className="text-base font-medium text-accent">Thank you!</h1>
           <p className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
-            It's on the way!
+            It&apos;s on the way!
           </p>
           <p className="mt-2 text-base text-gray-500">
             Your order #{order.id} is being processed and will be shipped soon.

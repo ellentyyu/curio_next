@@ -22,6 +22,7 @@ import {
 import {
   CheckCircleIcon,
   CheckIcon,
+  ClockIcon,
   QuestionMarkCircleIcon,
   StarIcon,
 } from '@heroicons/react/20/solid'
@@ -177,15 +178,25 @@ export default async function ProductDetailPage({ params }) {
                   </p>
                 </div>
 
-                <div className="mt-6 flex items-center">
-                  <CheckIcon
-                    aria-hidden="true"
-                    className="size-5 shrink-0 text-green-500"
-                  />
-                  <p className="ml-2 text-sm text-gray-500">
-                    In stock and ready to ship
-                  </p>
-                </div>
+                {product.inStock > 0 ? (
+                  <div className="mt-6 flex items-center">
+                    <CheckIcon
+                      aria-hidden="true"
+                      className="size-5 shrink-0 text-green-500"
+                    />
+                    <p className="ml-2 text-sm text-gray-500">
+                      In stock and ready to ship
+                    </p>
+                  </div>
+                ) : (
+                  <div className="mt-6 flex items-center">
+                    <ClockIcon
+                      aria-hidden="true"
+                      className="size-5 shrink-0 text-gray-300"
+                    />
+                    <p className="ml-2 text-sm text-gray-500">Out of stock</p>
+                  </div>
+                )}
               </section>
             </div>
 
