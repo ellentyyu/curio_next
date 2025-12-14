@@ -1,101 +1,16 @@
 import { connectDB } from '@/lib/db'
 import Product from '@/models/Product'
 import { success, fail } from '@/lib/response'
-// const productsTest = [
-//   {
-//     id: 1,
-//     name: 'Make yourself useful notebook',
-//     description:
-//       'Make yourself useful notebook with a beautiful design and a lot of features',
-//     price: 100,
-//     image:
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
-//     category: 'workspace',
-//     gallery: [
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-09.jpg',
-//     ],
-//     tags: ['new', 'sale', 'featured'],
-//     color: ['beige', 'black'],
-//     rating: 4.5,
-//     reviewCount: 100,
-//     inStock: 10,
-//     createdAt: new Date(),
-//     updatedAt: new Date(),
-//   },
-//   {
-//     id: 234,
-//     name: 'Keychaaaaiiinn (Black)',
-//     description:
-//       'Keychaaaaiiinn (Black) with a beautiful design and a lot of features',
-//     price: 199,
-//     image:
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-09.jpg',
-//     category: 'accessories',
-//     gallery: [
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-09.jpg',
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
-//     ],
-//     tags: ['new', 'sale', 'featured'],
-//     color: ['beige', 'pink'],
-//     rating: 4.5,
-//     reviewCount: 100,
-//     inStock: 10,
-//     createdAt: new Date(),
-//     updatedAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
-//   },
-//   {
-//     id: 345,
-//     name: 'Out and About Bottle',
-//     description:
-//       'Out and About Bottle with a beautiful design and a lot of features',
-//     price: 299,
-//     image:
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-07.jpg',
-//     category: 'travel',
-//     gallery: [
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-07.jpg',
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-06.jpg',
-//     ],
-//     tags: ['new', 'objects', 'featured'],
-//     color: ['purple', 'white'],
-//     rating: 4.5,
-//     reviewCount: 100,
-//     inStock: 10,
-//     createdAt: new Date(),
-//     updatedAt: new Date(),
-//   },
-//   {
-//     id: 456,
-//     name: 'another travel product',
-//     description:
-//       'another travel product with a beautiful design and a lot of features',
-//     price: 9,
-//     image:
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-06.jpg',
-//     category: 'travel',
-//     gallery: [
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-06.jpg',
-//       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-05.jpg',
-//     ],
-//     tags: ['new', 'sale', 'tees'],
-//     color: ['blue', 'green'],
-//     rating: 4.5,
-//     reviewCount: 100,
-//     inStock: 10,
-//     createdAt: new Date(),
-//     updatedAt: new Date(),
-//   },
-// ]
+
 const productsTest = [
   {
     id: 1,
     name: 'Make yourself useful notebook',
     description:
-      'Make yourself useful notebook with a beautiful design and a lot of features',
+      'Not sure how to be useful? This notebook might just be the propeller that pushes you to become the most useful person in the world.',
     price: 100,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1625577379990-ed6457d8beb0?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'portable lives',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -111,12 +26,12 @@ const productsTest = [
   },
   {
     id: 2,
-    name: 'Desk thoughts tray',
+    name: 'Bestselling typewriter',
     description:
-      'A shallow tray for unfinished ideas, loose screws, and the kind of objects you swear you will organize later.',
+      'Not that the typewriter is the best seller, but the thing you write with it will be.',
     price: 42,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1752833102516-d810df87d1b9?q=80&w=1154&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'desk rituals',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -136,7 +51,7 @@ const productsTest = [
       'Small enough to carry everywhere, large enough to remind you that plans are mostly suggestions.',
     price: 29,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1585327969772-17d7940f1a21?q=80&w=818&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'portable lives',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -151,12 +66,12 @@ const productsTest = [
   },
   {
     id: 4,
-    name: 'Cable management cube (optimistic)',
+    name: 'Mushroom desk lamp',
     description:
-      'Designed to suggest order, even if the cables inside remain emotionally unmanageable.',
+      'Lamp that looks like a mushroom that you once ate in a forest and that tasted like a brownie',
     price: 55,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1680786707341-3997abf85091?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'desk rituals',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -171,12 +86,12 @@ const productsTest = [
   },
   {
     id: 5,
-    name: 'Keychain of minor importance',
+    name: 'Kerchief of minor importance',
     description:
       'Holds keys. Adds weight. Serves no deeper purpose, and is comfortable with that.',
     price: 12,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1655151867981-4b162982aab3?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'small obsessions',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -191,12 +106,12 @@ const productsTest = [
   },
   {
     id: 6,
-    name: 'Notebook for lists you will not finish',
+    name: 'Tent mug with coffee',
     description:
-      'Pages specifically engineered to remain half-used, dog-eared, and quietly abandoned.',
+      "We don't know how the witchcraft of shipping is gonna do it, but the coffee is delivered to you wherever you are. Even to the tent you're camping in in the north pole.",
     price: 18,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1763616426659-6fcd6d0a9ac1?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'portable lives',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -211,12 +126,12 @@ const productsTest = [
   },
   {
     id: 7,
-    name: 'Unreasonably nice pen',
+    name: 'Unreasonably versatile jar',
     description:
-      'Writes smoothly, looks serious, and makes even bad handwriting feel intentional.',
+      'Light a candle in it. Put your pens in it. Grow a cactus in it. You name it.',
     price: 75,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1653478986313-bdbbecd74323?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'small obsessions',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -236,7 +151,7 @@ const productsTest = [
       'Fits chargers, receipts, regrets, and at least one object you forgot packing.',
     price: 64,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1583496597521-a34048bdbfcd?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'portable lives',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -251,12 +166,12 @@ const productsTest = [
   },
   {
     id: 9,
-    name: 'Object you keep touching absentmindedly',
+    name: 'Retro speaker',
     description:
-      'Sits on your desk. Does nothing. Somehow ends up in your hand during meetings.',
+      'Sits on your desk. Sings you to sleep. In the morning, at night, or during meetings.',
     price: 23,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1639689247459-939cc7b7181d?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'small obsessions',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -276,7 +191,7 @@ const productsTest = [
       'Tells time accurately while reminding you that it is, in fact, passing.',
     price: 88,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1742976650166-f657fa5c26ed?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'desk rituals',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -296,7 +211,7 @@ const productsTest = [
       'Holds fewer cards than you think you need, and somehow that feels like progress.',
     price: 120,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1711915506137-dd9e9b3488a1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'portable lives',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -311,12 +226,12 @@ const productsTest = [
   },
   {
     id: 12,
-    name: 'Tiny box for very important nothing',
+    name: 'Record player',
     description:
-      'A container whose main function is to make small, meaningless items feel significant.',
+      'A player that can play you new records like old ones and play old records like legends',
     price: 15,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1677519418984-a8e546fc70f2?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'desk rituals',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
@@ -336,7 +251,7 @@ const productsTest = [
       'Hard to explain, easy to keep, and strangely personal for something so small.',
     price: 47,
     image:
-      'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
+      'https://images.unsplash.com/photo-1570974774239-825ea88af94d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     category: 'small obsessions',
     gallery: [
       'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-05-image-card-08.jpg',
