@@ -77,6 +77,7 @@ export default async function OrdersPage() {
                         className="size-20 flex-none rounded-md object-cover sm:size-48"
                         width={192}
                         height={192}
+                        sizes="(max-width: 640px) 80px, 192px"
                       />
                       <div className="flex min-w-0 flex-1 flex-col pt-1.5 sm:pt-0">
                         <h3 className="text-sm text-gray-900">

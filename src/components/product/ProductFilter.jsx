@@ -9,6 +9,7 @@ import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useEffect, useState, useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { startTransition } from 'react'
 const filters = {
   price: [
     { value: '0-25', label: '$0 - $25', checked: false },
@@ -31,31 +32,6 @@ const filters = {
   ],
 }
 
-// const sideFilter = [
-//   {
-//     id: 'color',
-//     name: 'Color',
-//     options: [
-//       { value: 'white', label: 'White', checked: false },
-//       { value: 'beige', label: 'Beige', checked: false },
-//       { value: 'blue', label: 'Blue', checked: false },
-//       { value: 'brown', label: 'Brown', checked: false },
-//       { value: 'green', label: 'Green', checked: false },
-//       { value: 'purple', label: 'Purple', checked: false },
-//     ],
-//   },
-//   {
-//     id: 'tag',
-//     name: 'Tag',
-//     options: [
-//       { value: 'all-new-arrivals', label: 'All New Arrivals', checked: false },
-//       { value: 'tees', label: 'Tees', checked: false },
-//       { value: 'objects', label: 'Objects', checked: false },
-//       { value: 'sweatshirts', label: 'Sweatshirts', checked: false },
-//       { value: 'pants-and-shorts', label: 'Pants & Shorts', checked: false },
-//     ],
-//   },
-// ]
 const sortOptions = [
   { name: 'Newest', value: 'newest' },
   { name: 'Price: Low to High', value: 'price-asc' },
@@ -74,13 +50,6 @@ export default function ProductFilter() {
   )
 
   const handleFilterChange = (filter, value) => {
-    // setSelectedFilters((prev) => ({
-    //   ...prev,
-    //   [filter]: prev[filter].map((option) => ({
-    //     ...option,
-    //     checked: option.value === value ? !option.checked : option.checked,
-    //   })),
-    // }))
     const params = new URLSearchParams(searchParams)
 
     const current = params.get(filter)?.split(',') ?? []
@@ -91,7 +60,9 @@ export default function ProductFilter() {
     if (next.length > 0) params.set(filter, next.join(','))
     else params.delete(filter)
 
-    router.replace(`/product?${params.toString()}`, { scroll: false })
+    startTransition(() => {
+      router.replace(`/product?${params.toString()}`, { scroll: false })
+    })
   }
 
   const filterCount = Object.values(selectedFilters).reduce((acc, filter) => {
@@ -108,16 +79,16 @@ export default function ProductFilter() {
   useEffect(() => {
     const params = Object.fromEntries(searchParams.entries())
     setSelectedFilters((prev) => {
-      const next = structuredClone(prev)
+      const updatedFilters = structuredClone(prev)
 
-      for (let filter in next) {
+      for (let filter in updatedFilters) {
         const active = params[filter]?.split(',') ?? []
-        next[filter] = next[filter].map((option) => ({
+        updatedFilters[filter] = updatedFilters[filter].map((option) => ({
           ...option,
           checked: active.includes(option.value),
         }))
       }
-      return next
+      return updatedFilters
     })
 
     setSort(params.sort || 'newest')
