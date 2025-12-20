@@ -373,7 +373,7 @@ export default function ProductFilter() {
                               onChange={() => {
                                 handleFilterChange(key, option.value)
                               }}
-                              className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-accent checked:bg-accent indeterminate:border-accent indeterminate:bg-accent focus:ring-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                              className="col-start-1 row-start-1 cursor-pointer appearance-none rounded-sm border border-gray-300 bg-white checked:border-accent checked:bg-accent indeterminate:border-accent indeterminate:bg-accent focus:ring-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
                             />
                             <svg
                               fill="none"
@@ -399,7 +399,7 @@ export default function ProductFilter() {
                         </div>
                         <label
                           htmlFor={`${key}-${optionIdx}`}
-                          className="text-sm text-gray-600"
+                          className="cursor-pointer text-sm text-gray-600"
                         >
                           {option.label}
                         </label>

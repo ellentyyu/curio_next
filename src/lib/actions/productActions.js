@@ -1,6 +1,7 @@
 import { connectDB } from '@/lib/db'
 import Product from '@/models/Product'
 import { success, fail } from '@/lib/response'
+import { unstable_cache } from 'next/cache'
 
 const productsTest = [
   {
@@ -269,6 +270,15 @@ export const seedProducts = async () => {
   await connectDB()
   await Product.insertMany(productsTest)
 }
+const serializeParams = (params) => {
+  return JSON.stringify({
+    category: params.category ?? null,
+    price: params.price ?? null,
+    color: params.color ?? null,
+    tag: params.tag ?? null,
+    sort: params.sort ?? null,
+  })
+}
 const normalizeProduct = (product) => ({
   id: product._id.toString(),
   name: product.name,
@@ -343,6 +353,15 @@ export const getProducts = async (params) => {
   }
 }
 
+export const getCachedProducts = unstable_cache(
+  async (params) => {
+    return getProducts(params)
+  },
+  (params) => ['products', serializeParams(params)],
+  {
+    revalidate: 60,
+  },
+)
 export const getProductById = async (id) => {
   try {
     await connectDB()

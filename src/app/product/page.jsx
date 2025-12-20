@@ -491,13 +491,15 @@ export default async function ProductPage({ searchParams }) {
 
               {/* Product grid */}
               <div className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
-                <ProductGrid
-                  category={category}
-                  price={price}
-                  color={color}
-                  tag={tag}
-                  sort={sort}
-                />
+                <Suspense fallback={<SpinnerIcon />}>
+                  <ProductGrid
+                    category={category}
+                    price={price}
+                    color={color}
+                    tag={tag}
+                    sort={sort}
+                  />
+                </Suspense>
               </div>
             </div>
 

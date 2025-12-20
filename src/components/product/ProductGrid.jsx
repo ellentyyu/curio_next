@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getProducts } from '@/lib/actions/productActions'
+import { getProducts, getCachedProducts } from '@/lib/actions/productActions'
 import Image from 'next/image'
 export default async function ProductGrid({
   category,
@@ -8,7 +8,7 @@ export default async function ProductGrid({
   tag,
   sort,
 }) {
-  const result = await getProducts({ category, price, color, tag, sort })
+  const result = await getCachedProducts({ category, price, color, tag, sort })
   if (!result.success) {
     return <div>Error: {result.message}</div>
   }
