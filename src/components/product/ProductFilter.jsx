@@ -1,7 +1,6 @@
 'use client'
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { startTransition } from 'react'
 const filters = {
   price: [
     { value: '0-25', label: '$0 - $25', checked: false },
@@ -30,7 +29,7 @@ export default function ProductFilter() {
   const [selectedFilters, setSelectedFilters] = useState(() =>
     structuredClone(filters),
   )
-
+  const [isPending, startTransition] = useTransition() // for client-side navigation
   const handleFilterChange = (filter, value) => {
     const params = new URLSearchParams(searchParams)
 
@@ -98,7 +97,7 @@ export default function ProductFilter() {
                               onChange={() => {
                                 handleFilterChange(key, option.value)
                               }}
-                              className="col-start-1 row-start-1 cursor-pointer appearance-none rounded-sm border border-gray-300 bg-white checked:border-accent checked:bg-accent indeterminate:border-accent indeterminate:bg-accent focus:ring-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                              className={`col-start-1 row-start-1 cursor-pointer appearance-none rounded-sm border border-gray-300 bg-white checked:border-accent checked:bg-accent indeterminate:border-accent indeterminate:bg-accent focus:ring-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto ${isPending ? 'bg-accent' : ''}`}
                             />
                             <svg
                               fill="none"
