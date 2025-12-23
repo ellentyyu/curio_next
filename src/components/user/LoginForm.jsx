@@ -1,5 +1,4 @@
 'use client'
-import { useFormStatus } from 'react-dom'
 import { useActionState } from 'react'
 
 const initialState = {
@@ -7,7 +6,6 @@ const initialState = {
   error: null,
 }
 export default function LoginForm({ handleLogin }) {
-  const { pending } = useFormStatus()
   const [state, action, actionPending] = useActionState(
     handleLogin,
     initialState,

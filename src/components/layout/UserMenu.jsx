@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { UserIcon } from '@heroicons/react/24/outline'
 import { logout } from '@/lib/user/logout'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import { useUserStore } from '@/store/userStore'
 export default function UserMenu() {
   const router = useRouter()
@@ -19,20 +18,7 @@ export default function UserMenu() {
       // TODO: toast error
     }
   }
-  // const [user, setUser] = useState(null)
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const res = await fetch('/api/auth/me')
-  //     const result = await res.json()
-  //     if (!result.success) {
-  //       console.error('get user error', result.message)
-  //       return
-  //     }
-  //     console.log('user', result.data)
-  //     setUser(result.data)
-  //   }
-  //   fetchUser()
-  // }, [])
+
   return (
     <>
       {userId ? (

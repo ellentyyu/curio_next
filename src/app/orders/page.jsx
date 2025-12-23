@@ -2,7 +2,6 @@ import { cookies } from 'next/headers'
 import { verifyToken } from '@/lib/jwt'
 import { redirect } from 'next/navigation'
 import { getOrdersByUserId } from '@/lib/actions/orderActions'
-import { XMarkIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 
 export default async function OrdersPage() {
@@ -55,14 +54,6 @@ export default async function OrdersPage() {
                     >
                       Manage order
                     </a>
-                    {/* <div className="ml-4 border-l border-gray-200 pl-4 sm:ml-6 sm:pl-6">
-                      <a
-                        href={`/order/${order.id}`}
-                        className="text-indigo-600 hover:text-indigo-500"
-                      >
-                        View Invoice
-                      </a>
-                    </div> */}
                   </div>
                 </div>
               </div>
@@ -85,13 +76,6 @@ export default async function OrdersPage() {
                         </h3>
                         <p className="truncate text-sm text-gray-500">
                           <span>{item.color.join(', ')}</span>{' '}
-                          {/* <span
-                            aria-hidden="true"
-                            className="mx-1 text-gray-400"
-                          >
-                            &middot;
-                          </span>{' '}
-                          <span>{item.color.join(', ')}</span> */}
                         </p>
                         <p className="mt-1 text-sm text-gray-500">
                           {item.quantity} x $ {item.price}
@@ -99,15 +83,6 @@ export default async function OrdersPage() {
                         <p className="mt-auto text-base text-gray-900">
                           $ {item.price * item.quantity}
                         </p>
-                        {/* <div className="mt-1 flex text-sm">
-                          <p className="text-gray-900">Price</p>
-                          <p className="ml-2 text-gray-700">$ {item.price}</p>
-                        </div>
-
-                        <div className="mt-1 flex text-sm">
-                          <p className="text-gray-900">Quantity</p>
-                          <p className="ml-2 text-gray-700">{item.quantity}</p>
-                        </div> */}
                       </div>
                     </div>
                     <div className="mt-6 space-y-4 sm:mt-0 sm:ml-6 sm:w-40 sm:flex-none">
@@ -117,12 +92,6 @@ export default async function OrdersPage() {
                       >
                         Buy again
                       </button>
-                      {/* <button
-                        type="button"
-                        className="flex w-full cursor-pointer items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-2 text-sm font-medium text-gray-700 shadow-xs hover:bg-gray-50 focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-hidden sm:grow-0"
-                      >
-                        Shop similar
-                      </button> */}
                     </div>
                   </div>
                 ))}

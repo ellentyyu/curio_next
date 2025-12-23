@@ -5,8 +5,8 @@ import { useUserStore } from '@/store/userStore'
 import { logout } from '@/lib/user/logout'
 import { mergeCartItems } from '@/lib/cart/mergeCart'
 export default function HydrationBridge({ userId, cart }) {
-  const { cartItems, setCartItems, clearCart, setCartReady } = useCartStore()
   const { setUserId, clearUserId } = useUserStore()
+  const { cartItems, setCartItems, clearCart, setCartReady } = useCartStore()
 
   const hasInitCartRef = useRef(false)
   // sync server → client (user)
@@ -27,15 +27,19 @@ export default function HydrationBridge({ userId, cart }) {
     if (hasInitCartRef.current) return
 
     const localCart = Array.isArray(cartItems) ? cartItems : []
-    // when server cart is empty, use local cart
-    // when local cart is empty, use server cart
-    // otherwise merge the two
-    const merged =
-      cart.length === 0
-        ? localCart
-        : localCart.length === 0
-          ? cart
-          : mergeCartItems(cart, localCart)
+    // sync cart by merging
+    const hasServerCart = cart.length > 0
+    const hasLocalCart = localCart.length > 0
+    let merged
+    if (!hasServerCart && hasLocalCart) {
+      merged = localCart
+    } else if (hasServerCart && !hasLocalCart) {
+      merged = cart
+    } else if (hasServerCart && hasLocalCart) {
+      merged = mergeCartItems(cart, localCart)
+    } else {
+      merged = []
+    }
 
     setCartItems(merged)
     setCartReady(true)

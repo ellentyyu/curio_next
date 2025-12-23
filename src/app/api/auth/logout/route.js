@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import { jsonSuccess, jsonFail } from '@/utils/apiResponse'
-export async function POST(request) {
+export async function POST() {
   try {
     const cookiesStore = await cookies()
     cookiesStore.delete('token', { path: '/' })

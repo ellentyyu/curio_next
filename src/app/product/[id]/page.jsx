@@ -1,25 +1,4 @@
 import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-} from '@headlessui/react'
-import {
-  Bars3Icon,
-  MagnifyingGlassIcon,
-  ShieldCheckIcon,
-  ShoppingBagIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline'
-import {
   CheckCircleIcon,
   CheckIcon,
   ClockIcon,
@@ -75,29 +54,6 @@ const reviews = {
   ],
 }
 
-const incentives = [
-  {
-    name: 'Free shipping',
-    imageSrc:
-      'https://tailwindcss.com/plus-assets/img/ecommerce/icons/icon-shipping-simple.svg',
-    description:
-      "It's not actually free we just price it into the products. Someone's paying for it, and it's not us.",
-  },
-  {
-    name: '10-year warranty',
-    imageSrc:
-      'https://tailwindcss.com/plus-assets/img/ecommerce/icons/icon-warranty-simple.svg',
-    description:
-      "If it breaks in the first 10 years we'll replace it. After that you're on your own though.",
-  },
-  {
-    name: 'Exchanges',
-    imageSrc:
-      'https://tailwindcss.com/plus-assets/img/ecommerce/icons/icon-exchange-simple.svg',
-    description:
-      "If you don't like it, trade it to one of your friends for something of theirs. Don't send it here though.",
-  },
-]
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -215,91 +171,6 @@ export default async function ProductDetailPage({ params }) {
             <AddProductForm product={product} />
           </div>
         </div>
-
-        {/* <div className="mx-auto max-w-2xl px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8">
-
-          <section aria-labelledby="details-heading">
-            <div className="flex flex-col items-center text-center">
-              <h2
-                id="details-heading"
-                className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
-              >
-                The Fine Details
-              </h2>
-              <p className="mt-3 max-w-3xl text-lg text-gray-600">
-                Our patented padded snack sleeve construction protects your
-                favorite treats from getting smooshed during all-day adventures,
-                long shifts at work, and tough travel schedules.
-              </p>
-            </div>
-
-            <div className="mt-16 grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:gap-x-8">
-              <div>
-                <Image
-                  width={500}
-                  height={500}
-                  alt="Drawstring top with elastic loop closure and textured interior padding."
-                  src="https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg"
-                  className="aspect-3/2 w-full rounded-lg object-cover"
-                />
-                <p className="mt-8 text-base text-gray-500">
-                  The 20L model has enough space for 370 candy bars, 6 cylinders
-                  of chips, 1,220 standard gumballs, or any combination of
-                  on-the-go treats that your heart desires. Yes, we did the
-                  math.
-                </p>
-              </div>
-              <div>
-                <Image
-                  width={500}
-                  height={500}
-                  alt="Front zipper pouch with included key ring."
-                  src="https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-02.jpg"
-                  className="aspect-3/2 w-full rounded-lg object-cover"
-                />
-                <p className="mt-8 text-base text-gray-500">
-                  Up your snack organization game with multiple compartment
-                  options. The quick-access stash pouch is ready for even the
-                  most unexpected snack attacks and sharing needs.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section aria-labelledby="policy-heading" className="mt-16 lg:mt-24">
-            <h2 id="policy-heading" className="sr-only">
-              Our policies
-            </h2>
-            <div className="mx-auto mt-12 grid max-w-sm grid-cols-1 gap-x-8 gap-y-10 sm:max-w-none lg:grid-cols-3">
-              {incentives.map((incentive) => (
-                <div
-                  key={incentive.name}
-                  className="text-center sm:flex sm:text-left lg:block lg:text-center"
-                >
-                  <div className="sm:shrink-0">
-                    <div className="flow-root">
-                      <Image
-                        width={50}
-                        height={50}
-                        alt=""
-                        src={incentive.imageSrc}
-                        className="mx-auto size-16"
-                      />
-                    </div>
-                  </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-                    <h3 className="text-sm font-medium text-gray-900">
-                      {incentive.name}
-                    </h3>
-                    <p className="mt-2 text-sm text-gray-500">
-                      {incentive.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div> */}
 
         <section aria-labelledby="reviews-heading" className="bg-white">
           <div className="mx-auto max-w-2xl px-4 py-24 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32">

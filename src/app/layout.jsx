@@ -7,10 +7,8 @@ import Footer from '@/components/layout/Footer'
 import HydrationBridge from '@/components/layout/HydrationBridge'
 import { cookies } from 'next/headers'
 import { verifyToken } from '@/lib/jwt'
-import { getCategories } from '@/lib/mock-data/products.js'
 import { getProducts, seedProducts } from '@/lib/actions/productActions'
 import { getCartByUserId } from '@/lib/actions/cartActions'
-import { logout } from '@/lib/user/logout'
 export const metadata = {
   title: 'Curio Store',
   template: '%s | Curio Store',
@@ -64,15 +62,15 @@ export default async function RootLayout({ children }) {
     }
   }
 
-  // TODO: seed products if none exist
-  let products = null
+  // seed products
+  // let products = null
   const result = await getProducts({})
   if (result.success && result.data.products.length === 0) {
     await seedProducts()
   }
-  if (result.success) {
-    products = result.data.products
-  }
+  // if (result.success) {
+  //   products = result.data.products
+  // }
 
   return (
     <html

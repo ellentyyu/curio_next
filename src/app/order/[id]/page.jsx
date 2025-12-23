@@ -151,15 +151,6 @@ export default async function OrderPage({ params }) {
                 <dt className="font-medium text-gray-900">Subtotal</dt>
                 <dd className="text-gray-700">$ {order.totalPrice}</dd>
               </div>
-              {/* <div className="flex justify-between">
-                <dt className="flex font-medium text-gray-900">
-                  Discount
-                  <span className="ml-2 rounded-full bg-gray-200 px-2 py-0.5 text-xs text-gray-600">
-                    STUDENT50
-                  </span>
-                </dt>
-                <dd className="text-gray-700">-$18.00 (50%)</dd>
-              </div> */}
               <div className="flex justify-between">
                 <dt className="font-medium text-gray-900">Shipping</dt>
                 <dd className="text-gray-700">$ 50</dd>

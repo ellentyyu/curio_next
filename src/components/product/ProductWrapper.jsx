@@ -23,8 +23,9 @@ export default async function ProductWrapper({
       className="mx-auto max-w-2xl lg:max-w-7xl"
     >
       <h2 className="sr-only">Products</h2>
+      {/* 1. client rendered grid */}
       <ProductGridClient products={products} />
-      {/* server rendered grid */}
+      {/* 2. server rendered grid */}
       {/* <ProductGrid products={products} /> */}
     </section>
   )

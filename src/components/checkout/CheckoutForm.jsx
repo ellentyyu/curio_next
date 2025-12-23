@@ -1,25 +1,9 @@
 'use client'
 import { useState } from 'react'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useCartStore } from '@/store/cartStore'
 import { SpinnerIcon } from '@/components/ui/spinner'
-import { CheckCircleIcon, TrashIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
-const deliveryMethods = [
-  {
-    id: 1,
-    title: 'Standard',
-    turnaround: '4–10 business days',
-    price: '$5.00',
-  },
-  { id: 2, title: 'Express', turnaround: '2–5 business days', price: '$16.00' },
-]
-
-const paymentMethods = [
-  { id: 'credit-card', title: 'Credit card' },
-  { id: 'paypal', title: 'PayPal' },
-  { id: 'etransfer', title: 'eTransfer' },
-]
 
 const DUMMY_USER = {
   email: 'test@test.com',
@@ -141,52 +125,6 @@ export default function CheckoutForm() {
           </h2>
 
           <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-            {/* <div>
-              <label
-                htmlFor="first-name"
-                className="block text-sm/6 font-medium text-gray-700"
-              >
-                First name
-              </label>
-              <div className="mt-2">
-                <input
-                  id="first-name"
-                  name="first-name"
-                  type="text"
-                  autoComplete="given-name"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
-                  value={formData.firstName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, firstName: e.target.value })
-                  }
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="last-name"
-                className="block text-sm/6 font-medium text-gray-700"
-              >
-                Last name
-              </label>
-              <div className="mt-2">
-                <input
-                  id="last-name"
-                  name="last-name"
-                  type="text"
-                  autoComplete="family-name"
-                  className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
-                  value={formData.lastName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, lastName: e.target.value })
-                  }
-                  required
-                />
-              </div>
-            </div> */}
-
             <div className="sm:col-span-2">
               <label
                 htmlFor="name"
@@ -232,23 +170,6 @@ export default function CheckoutForm() {
                 />
               </div>
             </div>
-
-            {/* <div className="sm:col-span-2">
-          <label
-            htmlFor="apartment"
-            className="block text-sm/6 font-medium text-gray-700"
-          >
-            Apartment, suite, etc.
-          </label>
-          <div className="mt-2">
-            <input
-              id="apartment"
-              name="apartment"
-              type="text"
-              className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-primary sm:text-sm/6"
-            />
-          </div>
-        </div> */}
 
             <div>
               <label
@@ -314,10 +235,6 @@ export default function CheckoutForm() {
                   <option>Canada</option>
                   <option>Mexico</option>
                 </select>
-                {/* <ChevronDownIcon
-              aria-hidden="true"
-              className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-            /> */}
               </div>
             </div>
 
@@ -345,48 +262,6 @@ export default function CheckoutForm() {
             </div>
           </div>
         </div>
-
-        {/* <div className="mt-10 border-t border-gray-200 pt-10">
-          <fieldset>
-            <legend className="text-lg font-medium text-gray-900">
-              Delivery method
-            </legend>
-            <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-              {deliveryMethods.map((deliveryMethod) => (
-                <label
-                  key={deliveryMethod.id}
-                  aria-label={deliveryMethod.title}
-                  aria-description={`${deliveryMethod.turnaround} for ${deliveryMethod.price}`}
-                  className="group relative flex rounded-lg border border-gray-300 bg-white p-4 has-checked:outline-2 has-checked:-outline-offset-2 has-checked:outline-primary has-focus-visible:outline-3 has-focus-visible:-outline-offset-1 has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
-                >
-                  <input
-                    defaultValue={deliveryMethod.id}
-                    defaultChecked={deliveryMethod === deliveryMethods[0]}
-                    name="delivery-method"
-                    type="radio"
-                    className="absolute inset-0 appearance-none focus:outline-none"
-                  />
-                  <div className="flex-1">
-                    <span className="block text-sm font-medium text-gray-900">
-                      {deliveryMethod.title}
-                    </span>
-                    <span className="mt-1 block text-sm text-gray-500">
-                      {deliveryMethod.turnaround}
-                    </span>
-                    <span className="mt-6 block text-sm font-medium text-gray-900">
-                      {deliveryMethod.price}
-                    </span>
-                  </div>
-                  <CheckCircleIcon
-                    aria-hidden="true"
-                    className="invisible size-5 text-indigo-600 group-has-checked:visible"
-                  />
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        </div> */}
-
         {/* Payment */}
         <div className="mt-10 border-t border-gray-200 pt-10">
           <h2 className="text-lg font-medium text-gray-900">Payment</h2>

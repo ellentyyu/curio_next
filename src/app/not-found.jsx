@@ -1,9 +1,9 @@
 import Link from 'next/link'
 export default function NotFound() {
   return (
-    <main className="grid min-h-[70vh] place-items-center bg-white px-6 py-10 sm:py-20 lg:px-8 dark:bg-gray-900">
+    <main className="grid min-h-[70vh] place-items-center bg-bg px-6 py-10 sm:py-20 lg:px-8 dark:bg-gray-900">
       <div className="text-center">
-        <p className="text-base font-semibold text-indigo-600 sm:text-xl dark:text-indigo-400">
+        <p className="text-base font-semibold text-accent sm:text-xl dark:text-indigo-400">
           404
         </p>
         <h1 className="mt-4 text-3xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white">
@@ -15,7 +15,7 @@ export default function NotFound() {
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link
             href="/product"
-            className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+            className="rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
           >
             Go back home
           </Link>

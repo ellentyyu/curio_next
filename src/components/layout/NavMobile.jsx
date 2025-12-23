@@ -1,15 +1,6 @@
 'use client'
-import { Fragment, useState } from 'react'
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tab,
-} from '@headlessui/react'
+import { useState } from 'react'
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import {
   Bars3Icon,
   MagnifyingGlassIcon,

@@ -7,7 +7,6 @@ export async function GET() {
     const cookiesStore = await cookies()
     const token = cookiesStore.get('token')?.value
     const decoded = token ? verifyToken(token) : null
-    console.log('decoded', decoded)
     return jsonSuccess(200, decoded ? { id: decoded.id } : null)
   } catch (error) {
     console.error('get user error', error)

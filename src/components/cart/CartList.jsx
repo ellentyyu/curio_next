@@ -4,14 +4,8 @@ import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { SpinnerIcon } from '@/components/ui/spinner'
-import {
-  CheckIcon,
-  ClockIcon,
-  QuestionMarkCircleIcon,
-  XMarkIcon,
-} from '@heroicons/react/20/solid'
+import { CheckIcon, ClockIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import { useUserStore } from '@/store/userStore'
 export default function CartList() {
   const [hydrated, setHydrated] = useState(false)
@@ -107,24 +101,7 @@ export default function CartList() {
                             {index + 1}
                           </option>
                         ))}
-                        {/* <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                        <option value={4}>4</option>
-                        <option value={5}>5</option>
-                        <option value={6}>6</option>
-                        <option value={7}>7</option>
-                        <option value={8}>8</option> */}
                       </select>
-                      {/* <ChevronDownIcon
-                        aria-hidden="true"
-                        className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                      /> */}
-
-                      {/* <ChevronDownIcon
-                        aria-hidden="true"
-                        className="-mr-1 ml-1 size-5 shrink-0 text-gray-500 group-hover:text-gray-500"
-                      /> */}
                     </div>
 
                     <div className="absolute top-0 right-0">
@@ -155,12 +132,6 @@ export default function CartList() {
                       className="size-5 shrink-0 text-gray-300"
                     />
                   )}
-                  {/* TODO: Add leadTime */}
-                  {/* <span>
-                    {product.inStock
-                      ? 'In stock'
-                      : `Ships in ${product.leadTime}`}
-                  </span> */}
                 </p>
               </div>
             </li>
