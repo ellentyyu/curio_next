@@ -42,7 +42,7 @@ export default function ProductFilter() {
     else params.delete(filter)
 
     startTransition(() => {
-      router.replace(`/product?${params.toString()}`, { scroll: false })
+      router.push(`/product?${params.toString()}`, { scroll: false })
     })
   }
 
@@ -51,7 +51,7 @@ export default function ProductFilter() {
   const handleSortChange = (sort) => {
     const params = new URLSearchParams(searchParams)
     params.set('sort', sort)
-    router.replace(`/product?${params.toString()}`, { scroll: false })
+    router.push(`/product?${params.toString()}`, { scroll: false })
   }
   // sync url params to selected filters
   useEffect(() => {
