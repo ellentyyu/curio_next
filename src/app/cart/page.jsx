@@ -1,7 +1,7 @@
 import CartList from '@/components/cart/CartList'
 import { cookies } from 'next/headers'
 import { verifyToken } from '@/lib/jwt'
-import { getCartByUserId } from '@/lib/actions/cartActions'
+import { getCartByUserId } from '@/lib/server/actions/cartActions'
 export default async function CartPage() {
   const cookiesStore = await cookies()
   const token = cookiesStore.get('token')?.value

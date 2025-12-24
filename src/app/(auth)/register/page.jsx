@@ -1,4 +1,4 @@
-import { registerUser } from '@/lib/actions/userActions'
+import { registerUser } from '@/lib/server/actions/userActions'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 export default async function Register({ searchParams }) {

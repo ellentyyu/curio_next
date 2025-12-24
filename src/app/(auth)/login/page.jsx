@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
-import { loginUser } from '@/lib/actions/userActions'
+import { loginUser } from '@/lib/server/actions/userActions'
 import LoginForm from '@/components/user/LoginForm'
 export default async function Login({ searchParams }) {
   const { redirectTo } = await searchParams

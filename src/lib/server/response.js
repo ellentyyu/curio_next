@@ -1,4 +1,4 @@
-export const success = (status, data) => {
+export function success(status, data) {
   return {
     success: true,
     status,
@@ -6,7 +6,7 @@ export const success = (status, data) => {
   }
 }
 
-export const fail = (status, message) => {
+export function fail(status, message) {
   return {
     success: false,
     status,

@@ -3,7 +3,7 @@ import { verifyToken } from '@/lib/jwt'
 import { ObjectId } from 'mongodb'
 import { connectDB } from '@/lib/db'
 import Cart from '@/models/Cart'
-import { jsonSuccess, jsonFail } from '@/utils/apiResponse'
+import { jsonSuccess, jsonFail } from '@/lib/client/apiResponse'
 export async function POST(request) {
   try {
     await connectDB()

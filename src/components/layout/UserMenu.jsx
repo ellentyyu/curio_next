@@ -2,7 +2,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import Link from 'next/link'
 import { UserIcon } from '@heroicons/react/24/outline'
-import { logout } from '@/lib/user/logout'
+import { logout } from '@/lib/domain/user/logout'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/userStore'
 export default function UserMenu() {

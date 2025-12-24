@@ -1,7 +1,7 @@
 import { connectDB } from '@/lib/db'
 import Cart from '@/models/Cart'
 import { Types } from 'mongoose'
-import { success, fail } from '@/lib/response'
+import { success, fail } from '@/lib/server/response'
 
 export const getCartByUserId = async (userId) => {
   try {

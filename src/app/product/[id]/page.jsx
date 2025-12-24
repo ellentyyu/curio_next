@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getProductById } from '@/lib/actions/productActions'
+import { getProductById } from '@/lib/server/actions/productActions'
 import AddProductForm from '@/components/cart/AddProductForm'
 import { notFound } from 'next/navigation'
 const reviews = {

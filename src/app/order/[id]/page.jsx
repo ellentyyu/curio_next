@@ -1,4 +1,4 @@
-import { getOrderById } from '@/lib/actions/orderActions'
+import { getOrderById } from '@/lib/server/actions/orderActions'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { cookies } from 'next/headers'

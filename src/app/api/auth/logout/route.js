@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { jsonSuccess, jsonFail } from '@/utils/apiResponse'
+import { jsonSuccess, jsonFail } from '@/lib/client/apiResponse'
 export async function POST() {
   try {
     const cookiesStore = await cookies()

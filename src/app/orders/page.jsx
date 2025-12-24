@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import { verifyToken } from '@/lib/jwt'
 import { redirect } from 'next/navigation'
-import { getOrdersByUserId } from '@/lib/actions/orderActions'
+import { getOrdersByUserId } from '@/lib/server/actions/orderActions'
 import Image from 'next/image'
 
 export default async function OrdersPage() {

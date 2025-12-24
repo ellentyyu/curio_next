@@ -2,8 +2,8 @@
 import { useEffect, useRef } from 'react'
 import { useCartStore } from '@/store/cartStore'
 import { useUserStore } from '@/store/userStore'
-import { logout } from '@/lib/user/logout'
-import { mergeCartItems } from '@/lib/cart/mergeCart'
+import { logout } from '@/lib/domain/user/logout'
+import { mergeCartItems } from '@/lib/domain/cart/mergeCart'
 export default function HydrationBridge({ userId, cart }) {
   const { setUserId, clearUserId } = useUserStore()
   const { cartItems, setCartItems, clearCart, setCartReady } = useCartStore()

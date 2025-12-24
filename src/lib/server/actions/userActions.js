@@ -1,7 +1,7 @@
 import { connectDB } from '@/lib/db'
 import User from '@/models/User'
 import { generateToken } from '@/lib/jwt'
-import { success, fail } from '@/lib/response'
+import { success, fail } from '@/lib/server/response'
 
 //** api response principle: id: _id.toString() instead of _id */
 //** all server action return shape

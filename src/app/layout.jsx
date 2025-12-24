@@ -7,8 +7,8 @@ import Footer from '@/components/layout/Footer'
 import HydrationBridge from '@/components/layout/HydrationBridge'
 import { cookies } from 'next/headers'
 import { verifyToken } from '@/lib/jwt'
-import { getProducts, seedProducts } from '@/lib/actions/productActions'
-import { getCartByUserId } from '@/lib/actions/cartActions'
+import { getProducts, seedProducts } from '@/lib/server/actions/productActions'
+import { getCartByUserId } from '@/lib/server/actions/cartActions'
 export const metadata = {
   title: 'Curio Store',
   template: '%s | Curio Store',

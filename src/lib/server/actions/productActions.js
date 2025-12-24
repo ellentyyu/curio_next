@@ -1,6 +1,6 @@
 import { connectDB } from '@/lib/db'
 import Product from '@/models/Product'
-import { success, fail } from '@/lib/response'
+import { success, fail } from '@/lib/server/response'
 import { unstable_cache } from 'next/cache'
 
 const productsTest = [

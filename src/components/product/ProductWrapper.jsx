@@ -1,5 +1,8 @@
 import Link from 'next/link'
-import { getProducts, getCachedProducts } from '@/lib/actions/productActions'
+import {
+  getProducts,
+  getCachedProducts,
+} from '@/lib/server/actions/productActions'
 import Image from 'next/image'
 import ProductGridClient from './ProductGridClient'
 import ProductGrid from './ProductGrid'

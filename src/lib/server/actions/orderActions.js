@@ -1,6 +1,6 @@
 import { connectDB } from '@/lib/db'
 import Order from '@/models/Order'
-import { success, fail } from '@/lib/response'
+import { success, fail } from '@/lib/server/response'
 
 export const getOrderById = async (id, userId) => {
   try {
