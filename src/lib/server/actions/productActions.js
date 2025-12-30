@@ -375,3 +375,17 @@ export const getProductById = async (id) => {
     return fail(500, 'get product by id failed')
   }
 }
+
+// export async function getProductsCore(params) {
+//   await connectDB()
+
+//   const { category, price, color, tag } = params
+//   const query = {}
+
+//   if (category) query.category = category
+
+//   price, color, tag...and other query logic
+
+//   const products = await Product.find(query).lean()
+//   return products.map(normalizeProduct)
+// }

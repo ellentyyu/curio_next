@@ -29,8 +29,27 @@ export default function ProductFilter() {
   const [selectedFilters, setSelectedFilters] = useState(() =>
     structuredClone(filters),
   )
+  function parseFromSearchParams(params) {
+    return {
+      color: params.get('color')?.split(',') ?? [],
+      price: params.get('price')?.split(',') ?? [],
+      tag: params.get('tag')?.split(',') ?? [],
+    }
+  }
+  const [localFilters, setLocalFilters] = useState(() =>
+    parseFromSearchParams(searchParams),
+  )
   const [isPending, startTransition] = useTransition() // for client-side navigation
   const handleFilterChange = (filter, value) => {
+    setLocalFilters((prev) => {
+      const current = prev[filter] ?? []
+      const next = current.includes(value)
+        ? current.filter((v) => v !== value)
+        : [...current, value]
+
+      return { ...prev, [filter]: next }
+    })
+
     const params = new URLSearchParams(searchParams)
 
     const current = params.get(filter)?.split(',') ?? []
@@ -55,21 +74,22 @@ export default function ProductFilter() {
   }
   // sync url params to selected filters
   useEffect(() => {
-    const params = Object.fromEntries(searchParams.entries())
-    setSelectedFilters((prev) => {
-      const updatedFilters = structuredClone(prev)
+    setLocalFilters(parseFromSearchParams(searchParams))
+    // const params = Object.fromEntries(searchParams.entries())
+    // setSelectedFilters((prev) => {
+    //   const updatedFilters = structuredClone(prev)
 
-      for (let filter in updatedFilters) {
-        const active = params[filter]?.split(',') ?? []
-        updatedFilters[filter] = updatedFilters[filter].map((option) => ({
-          ...option,
-          checked: active.includes(option.value),
-        }))
-      }
-      return updatedFilters
-    })
+    //   for (let filter in updatedFilters) {
+    //     const active = params[filter]?.split(',') ?? []
+    //     updatedFilters[filter] = updatedFilters[filter].map((option) => ({
+    //       ...option,
+    //       checked: active.includes(option.value),
+    //     }))
+    //   }
+    //   return updatedFilters
+    // })
 
-    setSort(params.sort || 'newest')
+    // setSort(params.sort || 'newest')
   }, [searchParams])
 
   return (
@@ -78,7 +98,7 @@ export default function ProductFilter() {
         <h2 className="sr-only">Filters</h2>
         <div className="hidden lg:block">
           <form className="divide-y divide-gray-200">
-            {Object.entries(selectedFilters).map(([key, section]) => (
+            {Object.entries(filters).map(([key, section]) => (
               <div key={key} className="py-10 first:pt-0 last:pb-0">
                 <fieldset>
                   <legend className="block text-sm font-medium text-gray-900">
@@ -93,7 +113,9 @@ export default function ProductFilter() {
                               id={`${key}-${optionIdx}`}
                               name={key}
                               type="checkbox"
-                              checked={option.checked}
+                              checked={localFilters[key]?.includes(
+                                option.value,
+                              )}
                               onChange={() => {
                                 handleFilterChange(key, option.value)
                               }}
